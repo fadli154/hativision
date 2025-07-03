@@ -5,7 +5,7 @@ import Image from "next/image";
 import { HeroHeader } from "./header";
 import { InfiniteSlider } from "@/components/ui/infinite-slider";
 import { ProgressiveBlur } from "@/components/ui/progressive-blur";
-import Spline from "@splinetool/react-spline";
+import SplineClientOnly from "@/components/SplineClientOnly";
 
 export default function HeroSection() {
   return (
@@ -32,7 +32,7 @@ export default function HeroSection() {
                   </Button>
                 </div>
 
-                <Spline className="absolute top-10 -right-90 w-full h-full scale-160 2xl:200" scene="https://prod.spline.design/ERHD7o0umVk5ESt6/scene.splinecode" />
+                <SplineClientOnly />
               </div>
             </div>
           </div>
