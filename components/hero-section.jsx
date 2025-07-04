@@ -1,44 +1,45 @@
 import React from "react";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import { HeroHeader } from "./header";
 import { InfiniteSlider } from "@/components/ui/infinite-slider";
 import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 import SplineClientOnly from "@/components/SplineClientOnly";
+import ButtonHero from "./ui/button-hero";
 
 export default function HeroSection() {
   return (
     <>
       <HeroHeader />
-      <main className="overflow-x-hidden">
+      <main className="overflow-x-hidden min-h-dvh">
         <section>
-          <div className="pb-8 pt-18 lg:pt-44">
+          <div className="pt-18 lg:pt-30 2xl:pt-44">
             <div className="relative mx-auto flex max-w-6xl flex-col px-6 lg:block">
               <div className="mx-auto max-w-lg text-center lg:ml-0 lg:w-1/2 lg:text-left">
                 <h1 className="mt-8 max-w-2xl text-balance text-5xl font-medium md:text-6xl lg:mt-16 xl:text-7xl">HatiVision</h1>
                 <p className="mt-8 max-w-2xl text-pretty text-lg">Deteksi Emosi, Temukan Dzikir yang Menenangkan.</p>
 
-                <div className="mt-12 flex flex-col items-center justify-center gap-2 sm:flex-row lg:justify-start">
-                  <Button asChild size="lg" className="px-5 text-base">
-                    <Link href="#link">
-                      <span className="text-nowrap">Start Building</span>
-                    </Link>
-                  </Button>
-                  <Button key={2} asChild size="lg" variant="ghost" className="px-5 text-base">
-                    <Link href="#link">
-                      <span className="text-nowrap">Request a demo</span>
-                    </Link>
-                  </Button>
+                <div className="flex justify-center items-center lg:justify-start lg:items-start">
+                  <div className="grid grid-cols-2 gap-4 pt-6 w-[calc(100%-2rem)] lg:w-[calc(80%-1rem)] py-4 pb-10 lg:pb-0">
+                    <ButtonHero color="green" icon="mosque">
+                      Dzikir Sholat
+                    </ButtonHero>
+                    <ButtonHero color="red" icon="shield">
+                      Ruqyah
+                    </ButtonHero>
+                    <ButtonHero color="yellow" icon="sun">
+                      Dzikir Pagi
+                    </ButtonHero>
+                    <ButtonHero color="blue" icon="moon">
+                      Dzikir Malam
+                    </ButtonHero>
+                  </div>
                 </div>
-
                 <SplineClientOnly />
               </div>
             </div>
           </div>
         </section>
-        <section className="bg-background pb-16 md:pb-32">
-          <div className="group relative m-auto max-w-6xl px-6">
+        <section className="bg-background pb-5 pt-20 md:pt-0 md:pb-10">
+          <div className="group relative lg:-top-20 m-auto max-w-6xl px-6">
             <div className="flex flex-col items-center md:flex-row">
               <div className="md:max-w-44 md:border-r md:pr-6">
                 <p className="text-end text-sm">Powering the best teams</p>
