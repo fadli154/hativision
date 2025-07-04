@@ -7,10 +7,9 @@ import React from "react";
 import { ModeToggle } from "./mode-toggle";
 
 const menuItems = [
+  { name: "Home", href: "#link" },
   { name: "Features", href: "#link" },
-  { name: "Solution", href: "#link" },
-  { name: "Pricing", href: "#link" },
-  { name: "About", href: "#link" },
+  { name: "Team", href: "#link" },
 ];
 
 export const HeroHeader = () => {
@@ -56,12 +55,12 @@ export const HeroHeader = () => {
                 </ul>
               </div>
               <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
-                <Button asChild variant="outline" size="sm">
+                <Button asChild variant="outline" className={`py-[18px]`} size="sm">
                   <Link href="#">
                     <span>Login</span>
                   </Link>
                 </Button>
-                <Button asChild size="sm">
+                <Button asChild className={`py-[18px]`} size="sm">
                   <Link href="#">
                     <span>Sign Up</span>
                   </Link>
