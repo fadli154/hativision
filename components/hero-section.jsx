@@ -6,6 +6,8 @@ import SplineClientOnly from "@/components/SplineClientOnly";
 import ButtonHero from "./ui/button-hero";
 
 export default function HeroSection() {
+  const purple_gradiant = "bg-gradient-to-t from-transparent via-purple-800 to-transparent filter blur-[120px]";
+
   return (
     <>
       <HeroHeader />
@@ -13,9 +15,9 @@ export default function HeroSection() {
         <section>
           <div className="pt-18 lg:pt-30 2xl:pt-44">
             <div className="relative mx-auto flex max-w-6xl flex-col px-6 lg:block">
-              <div className="mx-auto max-w-lg text-center lg:ml-0 lg:w-1/2 lg:text-left">
-                <h1 className="mt-8 max-w-2xl text-balance text-5xl font-medium md:text-6xl lg:mt-16 xl:text-7xl">HatiVision</h1>
-                <p className="mt-8 max-w-2xl text-pretty text-lg">Deteksi Emosi, Temukan Dzikir yang Menenangkan.</p>
+              <div className="mx-auto max-w-lg text-center lg:ml-0 lg:w-1/2 lg:text-left relative">
+                <h1 className="mt-8 max-w-2xl text-balance text-5xl font-medium md:text-6xl lg:mt-16 xl:text-7xl bg-gradient-to-br from-purple-200 via-purple-300 to-purple-500 text-transparent bg-clip-text">HatiVision.</h1>
+                <p className="mt-8 max-w-2xl text-pretty text-lg">Deteksi emosi, temukan dzikir yang menenangkan.</p>
 
                 <div className="flex justify-center items-center lg:justify-start lg:items-start">
                   <div className="grid grid-cols-2 gap-4 pt-6 w-[calc(100%-2rem)] py-4 pb-10 lg:pb-0">
@@ -33,19 +35,19 @@ export default function HeroSection() {
                     </ButtonHero>
                   </div>
                 </div>
-                <SplineClientOnly />
+                {/* gradient start */}
+                <div className={`absolute z-[0] w-[60%] h-[60%] lg:-right-140 bottom-20 ${purple_gradiant}`} />
+                {/* gradient end */}
               </div>
+              <SplineClientOnly />
             </div>
           </div>
         </section>
         <section className="bg-background pb-5 pt-20 md:pt-0 ">
-          <div className="group relative lg:-top-25 m-auto max-w-6xl px-6">
-            <div className="flex flex-col items-center md:flex-row">
-              <div className="md:max-w-44 md:border-r md:pr-6">
-                <p className="text-end text-sm">Powering the best teams</p>
-              </div>
+          <div className="group relative lg:-top-25 top-10 m-auto max-w-6xl px-6">
+            <div className="flex flex-col items-center justify-center md:flex-row">
               <div className="relative py-6 md:w-[calc(100%-11rem)]">
-                <InfiniteSlider speedOnHover={20} speed={40} gap={112}>
+                <InfiniteSlider speedOnHover={20} speed={40} gap={80}>
                   <div className="flex">
                     <img className="mx-auto h-5 w-fit dark:invert" src="https://html.tailus.io/blocks/customers/nvidia.svg" alt="Nvidia Logo" height="20" width="auto" />
                   </div>
