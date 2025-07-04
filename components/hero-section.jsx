@@ -19,16 +19,16 @@ export default function HeroSection() {
 
                 <div className="flex justify-center items-center lg:justify-start lg:items-start">
                   <div className="grid grid-cols-2 gap-4 pt-6 w-[calc(100%-2rem)] lg:w-[calc(80%-1rem)] py-4 pb-10 lg:pb-0">
-                    <ButtonHero color="green" icon="mosque">
+                    <ButtonHero className="border-green-500/20 hover:shadow-green-500/30 hover:border-green-500/50 " via="via-green-400/20" icon="mosque">
                       Dzikir Sholat
                     </ButtonHero>
-                    <ButtonHero color="red" icon="shield">
+                    <ButtonHero className="border-red-500/20 hover:shadow-red-500/30 hover:border-red-500/50 " via="via-red-400/20" icon="shield">
                       Ruqyah
                     </ButtonHero>
-                    <ButtonHero color="yellow" icon="sun">
+                    <ButtonHero className="border-amber-500/20 hover:shadow-amber-500/30 hover:border-amber-500/50 " via="via-amber-400/20" icon="sun">
                       Dzikir Pagi
                     </ButtonHero>
-                    <ButtonHero color="blue" icon="moon">
+                    <ButtonHero className="border-blue-500/20 hover:shadow-blue-500/30 hover:border-blue-500/50 " via="via-blue-400/20" icon="moon">
                       Dzikir Malam
                     </ButtonHero>
                   </div>
