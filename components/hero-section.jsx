@@ -18,17 +18,17 @@ export default function HeroSection() {
                 <p className="mt-8 max-w-2xl text-pretty text-lg">Deteksi Emosi, Temukan Dzikir yang Menenangkan.</p>
 
                 <div className="flex justify-center items-center lg:justify-start lg:items-start">
-                  <div className="grid grid-cols-2 gap-4 pt-6 w-[calc(100%-2rem)] lg:w-[calc(80%-1rem)] py-4 pb-10 lg:pb-0">
-                    <ButtonHero className="border-green-500/20 hover:shadow-green-500/30 hover:border-green-500/50 " via="via-green-400/20" icon="mosque">
+                  <div className="grid grid-cols-2 gap-4 pt-6 w-[calc(100%-2rem)] py-4 pb-10 lg:pb-0">
+                    <ButtonHero className="border-green-500/30 hover:shadow-green-500/30 hover:border-green-500/50 " via="via-green-400/20" icon="mosque">
                       Dzikir Sholat
                     </ButtonHero>
-                    <ButtonHero className="border-red-500/20 hover:shadow-red-500/30 hover:border-red-500/50 " via="via-red-400/20" icon="shield">
+                    <ButtonHero className="border-red-500/30 hover:shadow-red-500/30 hover:border-red-500/50 " via="via-red-400/20" icon="shield">
                       Ruqyah
                     </ButtonHero>
-                    <ButtonHero className="border-amber-500/20 hover:shadow-amber-500/30 hover:border-amber-500/50 " via="via-amber-400/20" icon="sun">
+                    <ButtonHero className="border-amber-500/30 hover:shadow-amber-500/30 hover:border-amber-500/50 " via="via-amber-400/20" icon="sun">
                       Dzikir Pagi
                     </ButtonHero>
-                    <ButtonHero className="border-blue-500/20 hover:shadow-blue-500/30 hover:border-blue-500/50 " via="via-blue-400/20" icon="moon">
+                    <ButtonHero className="border-blue-500/30 hover:shadow-blue-500/30 hover:border-blue-500/50 " via="via-blue-400/20" icon="moon">
                       Dzikir Malam
                     </ButtonHero>
                   </div>
@@ -38,8 +38,8 @@ export default function HeroSection() {
             </div>
           </div>
         </section>
-        <section className="bg-background pb-5 pt-20 md:pt-0 md:pb-10">
-          <div className="group relative lg:-top-20 m-auto max-w-6xl px-6">
+        <section className="bg-background pb-5 pt-20 md:pt-0 ">
+          <div className="group relative lg:-top-25 m-auto max-w-6xl px-6">
             <div className="flex flex-col items-center md:flex-row">
               <div className="md:max-w-44 md:border-r md:pr-6">
                 <p className="text-end text-sm">Powering the best teams</p>
