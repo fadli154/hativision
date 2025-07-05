@@ -5,6 +5,7 @@ import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 import SplineClientOnly from "@/components/SplineClientOnly";
 import ButtonHero from "./ui/button-hero";
 import ImageUploader from "./ImageUploader";
+import Image from "next/image";
 
 export default function HeroSection() {
   const purple_gradiant = "bg-gradient-to-t from-transparent via-purple-800 to-transparent filter blur-[120px]";
@@ -12,14 +13,16 @@ export default function HeroSection() {
   return (
     <>
       <HeroHeader />
-      <main className="overflow-x-hidden min-h-dvh">
+      <main className="overflow-hidden min-h-dvh">
         <section>
           <div className="pt-18 lg:pt-30 2xl:pt-44">
             <div className="relative mx-auto flex max-w-6xl flex-col px-6 lg:block">
               <div className="mx-auto max-w-lg text-center lg:ml-0 lg:w-1/2 lg:text-left relative">
-                <h1 className="mt-8 max-w-2xl text-slate-700 dark:text-white text-balance text-2xl font-medium md:text-3xl lg:mt-16 xl:text-6xl  lg:leading-[75px]">
-                  Unggah <span className="bg-gradient-to-br from-purple-200 via-purple-300 to-purple-500 text-transparent bg-clip-text">gambar untuk</span> mendeteksi emosi
-                </h1>
+                <div className="w-full flex justify-center items-center lg:justify-start lg:items-start">
+                  <h1 className="mt-8 max-w-2xl text-slate-700 dark:text-white text-balance text-2xl font-medium md:text-3xl lg:mt-16 xl:text-6xl lg:leading-[75px] w-full md:w-[50%] lg:w-full text-center lg:text-start">
+                    Unggah <span className="bg-gradient-to-br from-purple-200 via-purple-300 to-purple-500 text-transparent bg-clip-text">gambar untuk</span> mendeteksi emosi
+                  </h1>
+                </div>
 
                 <div className="flex justify-center items-center lg:justify-start lg:items-start">
                   <div className="grid grid-cols-2 gap-4 pt-6 w-[calc(100%-0.1rem)]">
@@ -37,10 +40,13 @@ export default function HeroSection() {
                 {/* gradient end */}
               </div>
               <SplineClientOnly />
+              <div className="flex justify-center items-center py-10">
+                <Image src="/img/image-mobile.png" alt="hero" className="w-[60%] h-[60%] lg:hidden" sizes="100vw" width={40} height={40} />
+              </div>
             </div>
           </div>
         </section>
-        <section className="bg-background pb-5 pt-20 md:pt-0 ">
+        <section className="bg-background pb-5 md:pt-0 ">
           <div className="group relative 2xl:-top-35 top-10 lg:-top-20  m-auto max-w-6xl px-6">
             <div className="flex flex-col items-center justify-center md:flex-row">
               <div className="relative py-6 md:w-[calc(100%-11rem)]">
