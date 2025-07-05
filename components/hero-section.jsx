@@ -17,15 +17,18 @@ export default function HeroSection() {
           <div className="pt-18 lg:pt-30 2xl:pt-44">
             <div className="relative mx-auto flex max-w-6xl flex-col px-6 lg:block">
               <div className="mx-auto max-w-lg text-center lg:ml-0 lg:w-1/2 lg:text-left relative">
-                <h1 className="mt-8 max-w-2xl text-slate-700 dark:text-white text-balance text-2xl font-medium md:text-3xl lg:mt-16 xl:text-6xl ">
+                <h1 className="mt-8 max-w-2xl text-slate-700 dark:text-white text-balance text-2xl font-medium md:text-3xl lg:mt-16 xl:text-6xl  lg:leading-[75px]">
                   Unggah <span className="bg-gradient-to-br from-purple-200 via-purple-300 to-purple-500 text-transparent bg-clip-text">gambar untuk</span> mendeteksi emosi
                 </h1>
 
                 <div className="flex justify-center items-center lg:justify-start lg:items-start">
-                  <div className="grid grid-cols-2 gap-4 pt-6 w-[calc(100%-0.1rem)] py-4 pb-10 lg:pb-0">
+                  <div className="grid grid-cols-2 gap-4 pt-6 w-[calc(100%-0.1rem)]">
                     <ImageUploader icon="search-image" className="border-red-500/30 hover:shadow-red-500/30 hover:border-red-500/50 " via="via-red-400/20">
                       Unggah Gambar
                     </ImageUploader>
+                    <ButtonHero icon="mosque" className="border-green-500/30 hover:shadow-green-500/30 hover:border-green-500/50" via="via-green-400/20">
+                      Dzikir Sholat
+                    </ButtonHero>
                   </div>
                 </div>
                 <span className="mt-3 text-xs inline-block text-center text-slate-400 dark:text-slate-300">Dengan mengunggah gambar atau URL, Anda menyetujui kami Ketentuan Penggunaan dan Kebijakan Privasi.</span>
