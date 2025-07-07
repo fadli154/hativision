@@ -5,19 +5,19 @@ import Link from "next/link";
 const members = [
   {
     name: "Fadli Hifziansyah",
-    role: "UI/UX & Integrator",
+    role: "Project Planner & Frontend",
     avatar: "https://alt.tailus.io/images/team/member-one.webp",
     link: "#",
   },
   {
     name: "Azka Maulana",
-    role: "AI Specialist & Frontend",
+    role: "AI Specialist & Backend",
     avatar: "https://alt.tailus.io/images/team/member-two.webp",
     link: "#",
   },
   {
     name: "Nasywan",
-    role: "Project Planner & Backend",
+    role: "UI/UX & Integrator",
     avatar: "https://alt.tailus.io/images/team/member-three.webp",
     link: "#",
   },

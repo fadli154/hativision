@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { Mic, Loader2 } from "lucide-react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export default function VoiceAI() {
   const [text, setText] = useState("");
@@ -9,6 +11,8 @@ export default function VoiceAI() {
   const widgetRef = useRef(null);
 
   useEffect(() => {
+    AOS.init({ duration: 800, once: true, easing: "ease-out-cubic" });
+
     if (widgetRef.current && !widgetRef.current.hasChildNodes()) {
       const convai = document.createElement("elevenlabs-convai");
       convai.setAttribute("agent-id", "agent_01jzjwwt4zehwrf830n41xrs9v");
@@ -44,7 +48,7 @@ export default function VoiceAI() {
     <div className="py-14 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto bg-white dark:bg-zinc-900 shadow-2xl rounded-2xl p-6 sm:p-8 space-y-6 border border-zinc-200 dark:border-zinc-700 transition-all duration-300">
         {/* Judul */}
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-800 dark:text-white text-center flex items-center justify-center gap-2">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-800 dark:text-white text-center flex items-center justify-center gap-2" data-aos="fade-up" data-aos-delay="200">
           <Mic className="text-purple-500 animate-pulse" />
           Voice AI <span className="text-purple-500">(Text to Speech)</span>
         </h2>
@@ -56,13 +60,17 @@ export default function VoiceAI() {
           value={text}
           onChange={(e) => setText(e.target.value)}
           rows={4}
+          data-aos="fade-up"
+          data-aos-delay="300"
         />
 
         {/* Tombol */}
         <button
           onClick={handleSynthesize}
           disabled={!text || loading}
-          className="group w-full bg-gradient-to-br from-purple-500 to-purple-700 text-white font-semibold py-3 rounded-xl hover:scale-[1.02] hover:shadow-lg disabled:opacity-50 transition-all flex items-center justify-center gap-2"
+          className="group w-full bg-gradient-to-br from-purple-500 to-purple-700 text-white font-semibold py-3 rounded-xl hover:scale-[1.02] hover:shadow-lg disabled:opacity-50 hover:duration-500 transition-all flex items-center justify-center gap-2 hover:transition-all duration-300 ease-out"
+          data-aos="zoom-in"
+          data-aos-delay="400"
         >
           {loading ? (
             <>
