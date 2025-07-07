@@ -11,17 +11,21 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-      <section className="py-20 bg-zinc-50 dark:bg-violet-950/20">
+      <section id="voiceai" className="py-20 bg-zinc-50 dark:bg-violet-950/20">
         <VoiceAI />
       </section>
-      <section className="">
+      <section id="conversation">
         <VoiceConversation />
       </section>
-      <section className="my-12">
+      <section id="chat">
         <ChatVoiceAI />
       </section>
-      <Features />
-      <TeamSection />
+      <section id="features">
+        <Features />
+      </section>
+      <section id="team">
+        <TeamSection />
+      </section>
       <FooterSection />
     </>
   );

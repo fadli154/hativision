@@ -64,7 +64,7 @@ export default function HeroSection() {
 
   return (
     <AOSWrapper>
-      <>
+      <div id="home">
         <HeroHeader />
         {isDragging && (
           <div className="fixed inset-0 z-50 bg-violet-400/30 border-2 border-dashed border-violet-500 flex justify-center items-center text-2xl font-semibold text-violet-700 pointer-events-none">Lepaskan gambar untuk mengunggah...</div>
@@ -140,7 +140,7 @@ export default function HeroSection() {
             </div>
           )}
         </main>
-      </>
+      </div>
     </AOSWrapper>
   );
 }

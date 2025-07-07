@@ -5,16 +5,45 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import React from "react";
 import { ModeToggle } from "./mode-toggle";
+import { useEffect, useState } from "react";
 
 const menuItems = [
-  { name: "Home", href: "#link" },
-  { name: "Start", href: "#link" },
-  { name: "Features", href: "#link" },
-  { name: "Team", href: "#link" },
+  { name: "Home", href: "#home" },
+  { name: "Start", href: "#voiceai" },
+  { name: "Features", href: "#features" },
+  { name: "Team", href: "#team" },
 ];
 
 export const HeroHeader = () => {
   const [menuState, setMenuState] = React.useState(false);
+  const [activeSection, setActiveSection] = useState("home");
+
+  useEffect(() => {
+    const sections = menuItems.map((item) => document.querySelector(item.href));
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute("id");
+            setActiveSection(id);
+          }
+        });
+      },
+      { threshold: 0.6 }
+    );
+
+    sections.forEach((section) => {
+      if (section) observer.observe(section);
+    });
+
+    return () => {
+      sections.forEach((section) => {
+        if (section) observer.unobserve(section);
+      });
+    };
+  }, []);
+
   return (
     <header>
       <nav data-state={menuState && "active"} className="bg-background/50 fixed z-20 w-full border-b backdrop-blur-3xl">
@@ -35,9 +64,9 @@ export const HeroHeader = () => {
               <ul className="flex gap-8 text-sm">
                 {menuItems.map((item, index) => (
                   <li key={index}>
-                    <Link href={item.href} className="text-muted-foreground hover:text-accent-foreground block duration-150">
-                      <span>{item.name}</span>
-                    </Link>
+                    <a href={item.href} className={`block duration-150 ${activeSection === item.href.replace("#", "") ? "text-primary font-semibold" : "text-muted-foreground hover:text-accent-foreground"}`}>
+                      {item.name}
+                    </a>
                   </li>
                 ))}
               </ul>
@@ -48,9 +77,13 @@ export const HeroHeader = () => {
                 <ul className="space-y-6 text-base">
                   {menuItems.map((item, index) => (
                     <li key={index}>
-                      <Link href={item.href} className="text-muted-foreground hover:text-accent-foreground block duration-150">
-                        <span>{item.name}</span>
-                      </Link>
+                      <a
+                        href={item.href}
+                        onClick={() => setMenuState(false)} // agar menu tertutup setelah klik
+                        className="block text-muted-foreground hover:text-accent-foreground duration-150"
+                      >
+                        {item.name}
+                      </a>
                     </li>
                   ))}
                 </ul>
