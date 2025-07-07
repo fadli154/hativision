@@ -18,8 +18,8 @@ export const Logo = ({ className, uniColor }) => {
       </text>
       <defs>
         <linearGradient id="logo-gradient" x1="12" y1="3" x2="12" y2="21.35" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#9B99FE" />
-          <stop offset="1" stopColor="#2BC8B7" />
+          <stop stopColor="#F699FEFF" />
+          <stop offset="1" stopColor="#7C2BC8FF" />
         </linearGradient>
       </defs>
     </svg>

@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { Mic, Loader2 } from "lucide-react";
 
 export default function VoiceAI() {
   const [text, setText] = useState("");
@@ -9,11 +10,10 @@ export default function VoiceAI() {
 
   useEffect(() => {
     if (widgetRef.current && !widgetRef.current.hasChildNodes()) {
-      // Tambahkan elemen custom ElevenLabs
       const convai = document.createElement("elevenlabs-convai");
       convai.setAttribute("agent-id", "agent_01jzjwwt4zehwrf830n41xrs9v");
       widgetRef.current.appendChild(convai);
-      // Tambahkan script
+
       const script = document.createElement("script");
       script.src = "https://unpkg.com/@elevenlabs/convai-widget-embed";
       script.async = true;
@@ -41,14 +41,52 @@ export default function VoiceAI() {
   };
 
   return (
-    <div className="p-6 rounded-xl border bg-white dark:bg-zinc-900 shadow-md max-w-md mx-auto flex flex-col gap-4">
-      <h2 className="text-xl font-bold mb-2">Voice AI (Text to Speech)</h2>
-      <textarea className="border rounded p-2 w-full min-h-[80px]" placeholder="Tulis teks untuk diubah menjadi suara..." value={text} onChange={(e) => setText(e.target.value)} />
-      <button className="bg-purple-600 text-white rounded p-2 font-semibold hover:bg-purple-700 disabled:opacity-50" onClick={handleSynthesize} disabled={!text || loading}>
-        {loading ? "Memproses..." : "Putar Suara"}
-      </button>
-      {audioUrl && <audio controls src={audioUrl} className="w-full mt-2" />}
-      <div ref={widgetRef} className="flex justify-center mt-6" />
+    <div className="py-14 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-2xl mx-auto bg-white dark:bg-zinc-900 shadow-2xl rounded-2xl p-6 sm:p-8 space-y-6 border border-zinc-200 dark:border-zinc-700 transition-all duration-300">
+        {/* Judul */}
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-800 dark:text-white text-center flex items-center justify-center gap-2">
+          <Mic className="text-purple-500 animate-pulse" />
+          Voice AI <span className="text-purple-500">(Text to Speech)</span>
+        </h2>
+
+        {/* Textarea */}
+        <textarea
+          className="w-full p-4 rounded-xl border border-zinc-300 dark:border-zinc-600 dark:bg-zinc-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none text-sm sm:text-base transition"
+          placeholder="Tulis teks untuk diubah menjadi suara..."
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          rows={4}
+        />
+
+        {/* Tombol */}
+        <button
+          onClick={handleSynthesize}
+          disabled={!text || loading}
+          className="group w-full bg-gradient-to-br from-purple-500 to-purple-700 text-white font-semibold py-3 rounded-xl hover:scale-[1.02] hover:shadow-lg disabled:opacity-50 transition-all flex items-center justify-center gap-2"
+        >
+          {loading ? (
+            <>
+              <Loader2 className="animate-spin size-5" />
+              Memproses...
+            </>
+          ) : (
+            <>
+              <Mic className="size-5 animate-pulse" />
+              Putar Suara
+            </>
+          )}
+        </button>
+
+        {audioUrl && (
+          <div className="mt-4">
+            <p className="text-sm text-zinc-600 dark:text-zinc-300 mb-1">Hasil audio:</p>
+            <audio controls src={audioUrl} className="w-full" />
+          </div>
+        )}
+
+        {/* ElevenLabs Widget */}
+        <div ref={widgetRef} className="flex justify-center mt-6" />
+      </div>
     </div>
   );
 }

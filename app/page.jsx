@@ -11,10 +11,10 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-      <section className="my-12">
+      <section className="py-20 bg-zinc-50 dark:bg-violet-950/20">
         <VoiceAI />
       </section>
-      <section className="my-12">
+      <section className="">
         <VoiceConversation />
       </section>
       <section className="my-12">
