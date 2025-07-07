@@ -2,7 +2,7 @@ import { cn } from "../lib/utils";
 
 export const Logo = ({ className, uniColor }) => {
   return (
-    <svg viewBox="0 0 150 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={cn("text-foreground h-6 w-auto", className)}>
+    <svg viewBox="0 0 100 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={cn("text-foreground h-6 w-auto", className)}>
       {/* Heart Shape */}
       <path
         d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 
@@ -13,7 +13,7 @@ export const Logo = ({ className, uniColor }) => {
         fill={uniColor ? "currentColor" : "url(#logo-gradient)"}
       />
       {/* Text "hatiVision" */}
-      <text x="28" y="17" fill="currentColor" fontFamily="Arial, sans-serif" fontSize="14" fontWeight="600">
+      <text x="28" y="17" fill="currentColor" fontFamily="Arial, sans-serif" fontSize="15" fontWeight="600">
         hatiVision
       </text>
       <defs>
