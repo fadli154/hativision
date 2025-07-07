@@ -97,7 +97,7 @@ export default function HeroSection() {
                   </div>
                   <span className="mt-3 text-xs inline-block text-center text-slate-400 dark:text-slate-300">Dengan mengunggah gambar atau URL, Anda menyetujui kami Ketentuan Penggunaan dan Kebijakan Privasi.</span>
                   {/* gradient start */}
-                  <div className={`absolute z-[0] w-[60%] h-[60%] lg:-right-140 -bottom-50 lg:bottom-20 ${purple_gradiant}`} />
+                  <div className={`absolute -z-[2] w-[60%] h-[60%] lg:-right-140 -bottom-50 lg:bottom-20 ${purple_gradiant}`} />
                   {/* gradient end */}
                 </div>
                 <SplineClientOnly />
