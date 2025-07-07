@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { HeroHeader } from "./header";
 import { InfiniteSlider } from "@/components/ui/infinite-slider";
@@ -6,14 +8,55 @@ import SplineClientOnly from "@/components/SplineClientOnly";
 import ButtonHero from "./ui/button-hero";
 import ImageUploader from "./ImageUploader";
 import Image from "next/image";
+import { useState, useRef } from "react";
 
 export default function HeroSection() {
   const purple_gradiant = "bg-gradient-to-t from-transparent via-purple-800 to-transparent filter blur-[120px]";
+  const [droppedImage, setDroppedImage] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const previewRef = useRef(null);
+  const dropRef = useRef();
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+
+    const file = e.dataTransfer.files?.[0];
+    if (file && file.type.startsWith("image/")) {
+      const imageUrl = URL.createObjectURL(file);
+      setDroppedImage(imageUrl);
+
+      // Scroll ke preview setelah 300ms (tunggu render)
+      setTimeout(() => {
+        previewRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, 200);
+    }
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "copy";
+  };
+
+  const handleDragEnter = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
 
   return (
     <>
       <HeroHeader />
-      <main className="overflow-hidden min-h-dvh">
+      {isDragging && (
+        <div className="fixed inset-0 z-50 bg-violet-400/30 border-2 border-dashed border-violet-500 flex justify-center items-center text-2xl font-semibold text-violet-700 pointer-events-none">Lepaskan gambar untuk mengunggah...</div>
+      )}
+
+      <main className="overflow-hidden min-h-dvh" onDrop={handleDrop} onDragOver={handleDragOver} onDragEnter={handleDragEnter} onDragLeave={handleDragLeave}>
         <section>
           <div className="pt-18 lg:pt-30 2xl:pt-44">
             <div className="relative mx-auto flex max-w-6xl flex-col px-6 lg:block">
@@ -29,8 +72,8 @@ export default function HeroSection() {
                     <ImageUploader icon="search-image" className="border-red-500/30 hover:shadow-red-500/30 hover:border-red-500/50 " via="via-red-400/20">
                       Unggah Gambar
                     </ImageUploader>
-                    <ButtonHero icon="mosque" className="border-green-500/30 hover:shadow-green-500/30 hover:border-green-500/50" via="via-green-400/20">
-                      Dzikir Sholat
+                    <ButtonHero icon="robot" className="border-blue-500/30 hover:shadow-blue-500/30 hover:border-blue-500/50" via="via-blue-400/20">
+                      Gunakan AI
                     </ButtonHero>
                   </div>
                 </div>
@@ -64,6 +107,14 @@ export default function HeroSection() {
             </div>
           </div>
         </section>
+        {droppedImage && (
+          <div ref={previewRef} className="mt-10 flex justify-center px-4">
+            <div className="border rounded-lg overflow-hidden shadow-lg max-w-sm w-full">
+              <img src={droppedImage} alt="Preview" className="w-full h-auto object-cover" />
+              <div className="p-2 text-center text-sm text-slate-600 dark:text-slate-300">Preview Gambar Anda</div>
+            </div>
+          </div>
+        )}
       </main>
     </>
   );

@@ -43,17 +43,8 @@ export default function VoiceAI() {
   return (
     <div className="p-6 rounded-xl border bg-white dark:bg-zinc-900 shadow-md max-w-md mx-auto flex flex-col gap-4">
       <h2 className="text-xl font-bold mb-2">Voice AI (Text to Speech)</h2>
-      <textarea
-        className="border rounded p-2 w-full min-h-[80px]"
-        placeholder="Tulis teks untuk diubah menjadi suara..."
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-      />
-      <button
-        className="bg-purple-600 text-white rounded p-2 font-semibold hover:bg-purple-700 disabled:opacity-50"
-        onClick={handleSynthesize}
-        disabled={!text || loading}
-      >
+      <textarea className="border rounded p-2 w-full min-h-[80px]" placeholder="Tulis teks untuk diubah menjadi suara..." value={text} onChange={(e) => setText(e.target.value)} />
+      <button className="bg-purple-600 text-white rounded p-2 font-semibold hover:bg-purple-700 disabled:opacity-50" onClick={handleSynthesize} disabled={!text || loading}>
         {loading ? "Memproses..." : "Putar Suara"}
       </button>
       {audioUrl && <audio controls src={audioUrl} className="w-full mt-2" />}
