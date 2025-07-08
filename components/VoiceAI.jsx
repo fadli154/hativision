@@ -46,9 +46,9 @@ export default function VoiceAI() {
 
   return (
     <div className="py-14 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-2xl mx-auto bg-white dark:bg-zinc-900 shadow-2xl rounded-2xl p-6 sm:p-8 space-y-6 border border-zinc-200 dark:border-zinc-700 transition-all duration-300">
+      <div className="max-w-2xl mx-auto bg-white dark:bg-zinc-900 shadow-lg rounded-2xl p-6 sm:p-8 space-y-6 border border-zinc-200 dark:border-zinc-700 transition-all duration-300">
         {/* Judul */}
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-800 dark:text-white text-center flex items-center justify-center gap-2" data-aos="fade-up" data-aos-delay="200">
+        <h2 className="text-lg sm:text-3xl font-extrabold text-zinc-800 dark:text-white text-center flex items-center justify-center gap-2" data-aos="fade-up" data-aos-delay="200">
           <Mic className="text-purple-500 animate-pulse" />
           Voice AI <span className="text-purple-500">(Text to Speech)</span>
         </h2>
@@ -68,7 +68,10 @@ export default function VoiceAI() {
         <button
           onClick={handleSynthesize}
           disabled={!text || loading}
-          className="group w-full bg-gradient-to-br from-purple-500 to-purple-700 text-white font-semibold py-3 rounded-xl hover:scale-[1.02] hover:shadow-lg disabled:opacity-50 hover:duration-500 transition-all flex items-center justify-center gap-2 hover:transition-all duration-300 ease-out"
+          className="group w-full bg-gradient-to-br from-purple-500 to-purple-700 text-white font-semibold py-3 rounded-xl 
+    hover:scale-[1.01] hover:shadow-lg 
+    transition-all duration-300 ease-out
+    disabled:opacity-50 flex items-center justify-center gap-2"
           data-aos="zoom-in"
           data-aos-delay="400"
         >

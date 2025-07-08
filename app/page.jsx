@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-      <section id="voiceai" className="py-20 bg-zinc-50 dark:bg-violet-950/20">
+      <section id="voiceai" className="py-20 mt-5 sm:mt-10 bg-zinc-50 dark:bg-violet-950/20">
         <VoiceAI />
       </section>
       <section id="conversation">

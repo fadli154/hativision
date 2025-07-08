@@ -10,6 +10,7 @@ import ImageUploader from "./ImageUploader";
 import Image from "next/image";
 import { useState, useRef } from "react";
 import AOSWrapper from "@/components/AOSProvider";
+import { X } from "lucide-react";
 
 export default function HeroSection() {
   const purple_gradiant = "bg-gradient-to-t from-transparent via-purple-800 to-transparent filter blur-[120px]";
@@ -77,7 +78,7 @@ export default function HeroSection() {
                 <div className="mx-auto max-w-lg text-center lg:ml-0 lg:w-1/2 lg:text-left relative">
                   <div className="w-full flex justify-center items-center lg:justify-start lg:items-start">
                     <h1
-                      className="mt-8 max-w-2xl text-slate-700 dark:text-white text-balance text-3xl font-medium  lg:mt-16 xl:text-6xl lg:leading-[75px] w-full md:w-[50%] lg:w-full text-center lg:text-start"
+                      className="mt-8 max-w-2xl text-slate-700 dark:text-white text-balance text-3xl font-medium  lg:mt-16 xl:text-6xl lg:leading-[75px] md:text-6xl w-full md:w-full text-center lg:text-start"
                       data-aos="fade-up"
                       data-aos-delay="100"
                     >
@@ -102,12 +103,12 @@ export default function HeroSection() {
                 </div>
                 <SplineClientOnly />
                 <div className="flex justify-center items-center pt-15 -z-[1]">
-                  <Image src="/img/image-mobile.png" alt="hero" className="w-[60%] h-[60%] lg:hidden" sizes="100vw" width={40} height={40} data-aos="zoom-in" data-aos-delay="500" />
+                  <Image src="/img/image-mobile.png" alt="hero" className="w-[60%] h-[60%] md:w-[40%] md:h-[40%] lg:hidden" sizes="100vw" width={40} height={40} data-aos="zoom-in" data-aos-delay="500" />
                 </div>
               </div>
             </div>
           </section>
-          <section className="bg-background pb-10 md:pt-0 ">
+          <section className="bg-background sm:pb-10 md:pb-0 md:pt-0 ">
             <div className="group relative 2xl:-top-40 top-10 lg:-top-20  m-auto max-w-6xl px-6">
               <div className="flex flex-col items-center justify-center md:flex-row">
                 <div className="relative py-6 md:w-[calc(100%-11rem)]">
@@ -126,11 +127,17 @@ export default function HeroSection() {
             </div>
           </section>
           {droppedImage && (
-            <div ref={previewRef} className="mb-10 flex justify-center p-4 relative">
-              <div className="relative border rounded-lg overflow-hidden shadow-lg max-w-sm w-full">
+            <div ref={previewRef} className="mb-10 flex justify-center px-4 relative">
+              <div className="relative border rounded-lg shadow-lg max-w-sm w-full">
                 {/* Tombol X */}
-                <button onClick={() => setDroppedImage(null)} className="absolute top-2 right-2 bg-white/80 hover:bg-white text-red-500 rounded-full w-7 h-7 flex items-center justify-center shadow-md transition" aria-label="Hapus gambar">
-                  ×
+                <button
+                  onClick={() => setDroppedImage(null)}
+                  className="absolute -top-3 -right-3 w-7 h-7 flex items-center justify-center rounded-full border border-red-300 bg-white text-red-500 
+             shadow-md hover:bg-red-500 hover:text-white transition-all duration-300 ease-in-out
+             hover:scale-110 active:scale-95 hover:rotate-12 dark:bg-zinc-900 dark:hover:bg-red-600 cursor-pointer"
+                  aria-label="Hapus gambar"
+                >
+                  <X className="text-lg leading-none font-bold w-4 h-4" />
                 </button>
 
                 {/* Gambar Preview */}

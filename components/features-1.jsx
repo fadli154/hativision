@@ -45,7 +45,7 @@ export default function Features() {
 function FeatureCard({ icon, title, desc, delay = 0 }) {
   return (
     <div className="group relative overflow-hidden transition-all duration-300 ease-out" data-aos="fade-up" data-aos-delay={delay}>
-      <Card className="h-full bg-white/80 dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-700 shadow-lg transition duration-300 ease-in-out transform">
+      <Card className="h-full bg-white/80 dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-700 transition duration-300 ease-in-out transform">
         <CardHeader className="pb-4 text-center">
           <CardDecorator>
             <div className="flex items-center justify-center">{icon}</div>
