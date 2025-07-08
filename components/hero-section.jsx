@@ -129,7 +129,7 @@ export default function HeroSection() {
               </div>
             </div>
           </section>
-          <section className="bg-background sm:pb-10 md:pb-0 md:pt-0 ">
+          <section className="bg-background pb-5 md:pt-0 ">
             <div className="group relative 2xl:-top-40 top-10 lg:-top-20  m-auto max-w-6xl px-6">
               <div className="flex flex-col items-center justify-center md:flex-row">
                 <div className="relative py-6 md:w-[calc(100%-11rem)]">
