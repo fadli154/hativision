@@ -44,6 +44,17 @@ export const HeroHeader = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY < 20) {
+        setActiveSection("home");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <header>
       <nav data-state={menuState && "active"} className="bg-background/50 fixed z-20 w-full border-b backdrop-blur-3xl">

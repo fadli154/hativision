@@ -17,18 +17,34 @@ export default function HeroSection() {
   const [droppedImage, setDroppedImage] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const previewRef = useRef(null);
-  const dropRef = useRef();
+  const dragCounter = useRef(0);
+  const allowedTypes = ["image/png", "image/jpeg", "image/jpg"];
+  const maxSizeMB = 5;
+
+  const validateFile = (file) => {
+    if (!allowedTypes.includes(file.type)) {
+      alert("Hanya file PNG, JPG, atau JPEG yang diperbolehkan.");
+      return false;
+    }
+
+    const sizeInMB = file.size / (1024 * 1024);
+    if (sizeInMB > maxSizeMB) {
+      alert(`Ukuran file terlalu besar. Maksimal ${maxSizeMB}MB.`);
+      return false;
+    }
+
+    return true;
+  };
 
   const handleManualUpload = (file) => {
-    if (file && file.type.startsWith("image/")) {
-      const imageUrl = URL.createObjectURL(file);
-      setDroppedImage(imageUrl);
+    if (!file || !validateFile(file)) return;
 
-      // Scroll ke preview
-      setTimeout(() => {
-        previewRef.current?.scrollIntoView({ behavior: "smooth" });
-      }, 200);
-    }
+    const imageUrl = URL.createObjectURL(file);
+    setDroppedImage(imageUrl);
+
+    setTimeout(() => {
+      previewRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 200);
   };
 
   const handleDrop = (e) => {
@@ -37,15 +53,14 @@ export default function HeroSection() {
     setIsDragging(false);
 
     const file = e.dataTransfer.files?.[0];
-    if (file && file.type.startsWith("image/")) {
-      const imageUrl = URL.createObjectURL(file);
-      setDroppedImage(imageUrl);
+    if (!file || !validateFile(file)) return;
 
-      // Scroll ke preview setelah 300ms (tunggu render)
-      setTimeout(() => {
-        previewRef.current?.scrollIntoView({ behavior: "smooth" });
-      }, 200);
-    }
+    const imageUrl = URL.createObjectURL(file);
+    setDroppedImage(imageUrl);
+
+    setTimeout(() => {
+      previewRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 200);
   };
 
   const handleDragOver = (e) => {
@@ -55,12 +70,16 @@ export default function HeroSection() {
 
   const handleDragEnter = (e) => {
     e.preventDefault();
+    dragCounter.current++;
     setIsDragging(true);
   };
 
   const handleDragLeave = (e) => {
     e.preventDefault();
-    setIsDragging(false);
+    dragCounter.current--;
+    if (dragCounter.current <= 0) {
+      setIsDragging(false);
+    }
   };
 
   return (
@@ -68,12 +87,14 @@ export default function HeroSection() {
       <div id="home">
         <HeroHeader />
         {isDragging && (
-          <div className="fixed inset-0 z-50 bg-violet-400/30 border-2 border-dashed border-violet-500 flex justify-center items-center text-2xl font-semibold text-violet-700 pointer-events-none">Lepaskan gambar untuk mengunggah...</div>
+          <div className="fixed inset-0 z-50 bg-violet-400/30 border-2 border-dashed border-violet-500 flex justify-center items-center text-2xl font-semibold text-violet-700 pointer-events-none transition-all duration-300 ease-in-out animate-fade-in">
+            Lepaskan gambar untuk mengunggah...
+          </div>
         )}
 
-        <main className="overflow-hidden min-h-dvh" onDrop={handleDrop} onDragOver={handleDragOver} onDragEnter={handleDragEnter} onDragLeave={handleDragLeave}>
+        <main className="overflow-hidden min-h-dvh !z-3" onDrop={handleDrop} onDragOver={handleDragOver} onDragEnter={handleDragEnter} onDragLeave={handleDragLeave}>
           <section>
-            <div className="pt-18 lg:pt-30 2xl:pt-44 !z-3">
+            <div className="pt-18 lg:pt-30 2xl:pt-44">
               <div className="relative mx-auto flex max-w-6xl flex-col px-6 lg:block">
                 <div className="mx-auto max-w-lg text-center lg:ml-0 lg:w-1/2 lg:text-left relative">
                   <div className="w-full flex justify-center items-center lg:justify-start lg:items-start">
@@ -86,7 +107,7 @@ export default function HeroSection() {
                     </h1>
                   </div>
 
-                  <div className="flex justify-center items-center lg:justify-start lg:items-start relative !z-3">
+                  <div className="flex justify-center items-center lg:justify-start lg:items-start relative !z-2">
                     <div className="grid grid-cols-2 gap-4 pt-6 w-[calc(100%-0.1rem)]" data-aos="fade-up" data-aos-delay="300">
                       <ImageUploader icon="search-image" className="border-red-500/30 hover:shadow-red-500/30 hover:border-red-500/50 " via="via-red-400/20" onFileChange={handleManualUpload}>
                         Unggah Gambar
@@ -133,7 +154,7 @@ export default function HeroSection() {
                 <button
                   onClick={() => setDroppedImage(null)}
                   className="absolute -top-3 -right-3 w-7 h-7 flex items-center justify-center rounded-full border border-red-300 bg-white text-red-500 
-             shadow-md hover:bg-red-500 hover:text-white transition-all duration-300 ease-in-out
+             shadow-sm hover:bg-red-500 hover:text-white transition-all duration-300 ease-in-out
              hover:scale-110 active:scale-95 hover:rotate-12 dark:bg-zinc-900 dark:hover:bg-red-600 cursor-pointer"
                   aria-label="Hapus gambar"
                 >

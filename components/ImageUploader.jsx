@@ -19,7 +19,7 @@ const ButtonHero = ({ className, children, icon, via, mode, onFileChange }) => {
 
   const inputProps = {
     type: "file",
-    accept: "image/*",
+    accept: "image/png, image/jpeg, image/jpg",
     ref: inputRef,
     onChange: handleFileChange,
     style: { display: "none" },
