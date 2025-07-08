@@ -1,0 +1,12 @@
+{
+  "HomePage": {
+    "title": "HatiVision",
+    "description": "A smart assistant to help you navigate and understand your emotions."
+  },
+  "MenuItem": {
+    "home": "Home",
+    "start": "Start",
+    "features": "Features",
+    "team": "Team"
+  }
+}

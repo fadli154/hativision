@@ -1,0 +1,12 @@
+{
+  "HomePage": {
+    "title": "HatiVision",
+    "description": "Solusi cerdas berbasis AI untuk menemani dan memahami emosimu."
+  },
+  "MenuItem": {
+    "home": "Beranda",
+    "start": "Mulai",
+    "features": "Fitur",
+    "team": "Tim"
+  }
+}

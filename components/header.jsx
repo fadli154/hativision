@@ -2,21 +2,26 @@
 import Link from "next/link";
 import { Logo } from "@/components/logo";
 import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import React from "react";
+import React, { useMemo } from "react";
 import { ModeToggle } from "./mode-toggle";
 import { useEffect, useState } from "react";
-
-const menuItems = [
-  { name: "Home", href: "#home" },
-  { name: "Start", href: "#voiceai" },
-  { name: "Features", href: "#features" },
-  { name: "Team", href: "#team" },
-];
+import { LocaleSwitcher } from "@/components/locale-switcher";
+import { useTranslations } from "next-intl";
 
 export const HeroHeader = () => {
   const [menuState, setMenuState] = React.useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const tMenu = useTranslations("MenuItem"); // ✅ Dijalankan dalam context
+
+  const menuItems = useMemo(
+    () => [
+      { name: tMenu("home"), href: "#home" },
+      { name: tMenu("start"), href: "#voiceai" },
+      { name: tMenu("features"), href: "#features" },
+      { name: tMenu("team"), href: "#team" },
+    ],
+    [tMenu]
+  );
 
   useEffect(() => {
     const sections = menuItems.map((item) => document.querySelector(item.href));
@@ -99,8 +104,9 @@ export const HeroHeader = () => {
                   ))}
                 </ul>
               </div>
-              <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
+              <div className="flex w-full justify-center item-center flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
                 <ModeToggle />
+                <LocaleSwitcher />
               </div>
             </div>
           </div>

@@ -7,12 +7,10 @@ import { Logo } from "@/components/logo";
 import Link from "next/link";
 
 const links = [
-  { title: "Features", href: "#" },
-  { title: "Solution", href: "#" },
-  { title: "Customers", href: "#" },
-  { title: "Pricing", href: "#" },
-  { title: "Help", href: "#" },
-  { title: "About", href: "#" },
+  { title: "Home", href: "#home" },
+  { title: "Start", href: "#voiceai" },
+  { title: "Features", href: "#features" },
+  { title: "Team", href: "#team" },
 ];
 
 const socials = [
@@ -42,9 +40,9 @@ export default function FooterSection() {
         {/* Navigation Links */}
         <div className="my-8 flex flex-wrap justify-center gap-6 text-sm" data-aos="fade-up" data-aos-delay="100">
           {links.map((link, index) => (
-            <Link key={index} href={link.href} className="text-muted-foreground hover:text-primary transition duration-150">
+            <a key={index} href={link.href} className="text-muted-foreground hover:text-primary transition duration-150">
               {link.title}
-            </Link>
+            </a>
           ))}
         </div>
 
@@ -59,7 +57,7 @@ export default function FooterSection() {
 
         {/* Copyright */}
         <div className="text-center text-sm text-muted-foreground" data-aos="fade-in" data-aos-delay="300">
-          © {new Date().getFullYear()} Tailark. All rights reserved.
+          © {new Date().getFullYear()} hatiVision. All rights reserved.
         </div>
       </div>
     </footer>
