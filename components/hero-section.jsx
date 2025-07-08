@@ -73,7 +73,7 @@ export default function HeroSection() {
 
         <main className="overflow-hidden min-h-dvh" onDrop={handleDrop} onDragOver={handleDragOver} onDragEnter={handleDragEnter} onDragLeave={handleDragLeave}>
           <section>
-            <div className="pt-18 lg:pt-30 2xl:pt-44">
+            <div className="pt-18 lg:pt-30 2xl:pt-44 !z-3">
               <div className="relative mx-auto flex max-w-6xl flex-col px-6 lg:block">
                 <div className="mx-auto max-w-lg text-center lg:ml-0 lg:w-1/2 lg:text-left relative">
                   <div className="w-full flex justify-center items-center lg:justify-start lg:items-start">
@@ -86,12 +86,12 @@ export default function HeroSection() {
                     </h1>
                   </div>
 
-                  <div className="flex justify-center items-center lg:justify-start lg:items-start">
+                  <div className="flex justify-center items-center lg:justify-start lg:items-start relative !z-3">
                     <div className="grid grid-cols-2 gap-4 pt-6 w-[calc(100%-0.1rem)]" data-aos="fade-up" data-aos-delay="300">
                       <ImageUploader icon="search-image" className="border-red-500/30 hover:shadow-red-500/30 hover:border-red-500/50 " via="via-red-400/20" onFileChange={handleManualUpload}>
                         Unggah Gambar
                       </ImageUploader>
-                      <ButtonHero icon="robot" className="border-blue-500/30 hover:shadow-blue-500/30 hover:border-blue-500/50" via="via-blue-400/20">
+                      <ButtonHero icon="robot" className="border-blue-500/30 hover:shadow-blue-500/30 hover:border-blue-500/50 !z-3" via="via-blue-400/20">
                         Gunakan AI
                       </ButtonHero>
                     </div>

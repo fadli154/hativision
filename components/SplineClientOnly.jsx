@@ -25,7 +25,7 @@ export default function SplineTest() {
     <div className="hidden lg:block lg:h-[30vh]  w-full">
       {showSpline && (
         <Spline
-          className="absolute hidden lg:block opacity-0 pointer-events-none lg:opacity-100 lg:pointer-events-auto lg:-top-22 2xl:-top-30 lg:-right-90 2xl:-right-90 2xl:scale-90 w-full h-full !-z-1"
+          className="absolute hidden lg:block opacity-0 pointer-events-none lg:opacity-100 lg:pointer-events-auto lg:-top-22 2xl:-top-30 lg:-right-90 2xl:-right-90 2xl:scale-90 w-full h-full z-1"
           scene="https://prod.spline.design/nzJuMtRDzNHlcZqO/scene.splinecode"
         />
       )}
