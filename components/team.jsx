@@ -29,10 +29,10 @@ export default function TeamSection() {
   const tTeam = useTranslations("Team");
 
   return (
-    <section className="bg-zinc-50 dark:bg-violet-950/20 py-16 md:py-32">
+    <section className="bg-zinc-50 dark:bg-violet-950/20 py-16 md:py-32 px-6">
       <AOSWrapper>
-        <div className="mx-auto max-w-5xl border-t px-6">
-          <span className="text-caption -ml-6 -mt-3.5 block w-max bg-gray-50 px-6 dark:bg-gray-950" data-aos="fade-up">
+        <div className="mx-auto max-w-5xl border-t">
+          <span className="text-caption ml-0 sm:-ml-6 -mt-3.5 block w-max px-6 bg-zinc-50 dark:bg-violet-950" data-aos="fade-up">
             {tTeam("title1")}
           </span>
 
