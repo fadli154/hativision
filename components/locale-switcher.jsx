@@ -35,7 +35,7 @@ export function LocaleSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm" className="text-xs flex items-center gap-2">
+        <Button variant="outline" size="sm" className="text-xs flex items-center gap-2 py-[16.8px]">
           <Globe className="size-4" />
           <span className="flex items-center gap-1 text-sm">
             <span className="text-base leading-none">{current.flag}</span>

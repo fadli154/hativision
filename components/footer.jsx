@@ -5,13 +5,8 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { Logo } from "@/components/logo";
 import Link from "next/link";
-
-const links = [
-  { title: "Home", href: "#home" },
-  { title: "Start", href: "#voiceai" },
-  { title: "Features", href: "#features" },
-  { title: "Team", href: "#team" },
-];
+import React, { useMemo } from "react";
+import { useTranslations } from "next-intl";
 
 const socials = [
   { label: "X/Twitter", href: "#", icon: "twitter" },
@@ -23,6 +18,18 @@ const socials = [
 ];
 
 export default function FooterSection() {
+  const tFooter = useTranslations("MenuItem");
+
+  const links = useMemo(
+    () => [
+      { title: tFooter("home"), href: "#home" },
+      { title: tFooter("start"), href: "#voiceai" },
+      { title: tFooter("features"), href: "#features" },
+      { title: tFooter("team"), href: "#team" },
+    ],
+    [tFooter]
+  );
+
   useEffect(() => {
     AOS.init({ once: true, duration: 800 });
   }, []);
@@ -56,7 +63,7 @@ export default function FooterSection() {
         </div>
 
         {/* Copyright */}
-        <div className="text-center text-sm text-muted-foreground" data-aos="fade-in" data-aos-delay="300">
+        <div className="text-center text-sm text-muted-foreground" data-aos="fade-up" data-aos-delay="300">
           © {new Date().getFullYear()} hatiVision. All rights reserved.
         </div>
       </div>

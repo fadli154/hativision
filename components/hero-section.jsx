@@ -11,6 +11,7 @@ import Image from "next/image";
 import { useState, useRef } from "react";
 import AOSWrapper from "@/components/AOSProvider";
 import { X } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export default function HeroSection() {
   const purple_gradiant = "bg-gradient-to-t from-transparent via-purple-800 to-transparent filter blur-[120px]";
@@ -20,6 +21,7 @@ export default function HeroSection() {
   const dragCounter = useRef(0);
   const allowedTypes = ["image/png", "image/jpeg", "image/jpg"];
   const maxSizeMB = 5;
+  const tHero = useTranslations("Hero");
 
   const validateFile = (file) => {
     if (!allowedTypes.includes(file.type)) {
@@ -103,21 +105,22 @@ export default function HeroSection() {
                       data-aos="fade-up"
                       data-aos-delay="100"
                     >
-                      Unggah <span className="bg-gradient-to-br from-purple-200 via-purple-300 to-purple-500 text-transparent bg-clip-text">gambar untuk</span> mendeteksi emosi
+                      {tHero("title1")} <span className="bg-gradient-to-br from-purple-200 via-purple-300 to-purple-500 text-transparent bg-clip-text block"> {tHero("title2")}</span>
+                      {tHero("title3")}
                     </h1>
                   </div>
 
                   <div className="flex justify-center items-center lg:justify-start lg:items-start relative !z-2">
                     <div className="grid grid-cols-2 gap-4 pt-6 w-[calc(100%-0.1rem)]" data-aos="fade-up" data-aos-delay="300">
                       <ImageUploader icon="search-image" className="border-red-500/30 hover:shadow-red-500/30 hover:border-red-500/50 " via="via-red-400/20" onFileChange={handleManualUpload}>
-                        Unggah Gambar
+                        {tHero("button1")}
                       </ImageUploader>
                       <ButtonHero icon="robot" className="border-blue-500/30 hover:shadow-blue-500/30 hover:border-blue-500/50 !z-3" via="via-blue-400/20">
-                        Gunakan AI
+                        {tHero("button2")}
                       </ButtonHero>
                     </div>
                   </div>
-                  <span className="mt-3 text-xs inline-block text-center text-slate-400 dark:text-slate-300">Dengan mengunggah gambar atau URL, Anda menyetujui kami Ketentuan Penggunaan dan Kebijakan Privasi.</span>
+                  <span className="mt-3 text-xs inline-block text-center text-slate-400 dark:text-slate-300">{tHero("terms")}</span>
                   {/* gradient start */}
                   <div className={`absolute -z-[2] w-[60%] h-[60%] lg:-right-140 -bottom-50 lg:bottom-20 ${purple_gradiant}`} />
                   {/* gradient end */}
@@ -134,9 +137,9 @@ export default function HeroSection() {
               <div className="flex flex-col items-center justify-center md:flex-row">
                 <div className="relative py-6 md:w-[calc(100%-11rem)]">
                   <InfiniteSlider speed={40} speedOnHover={80} gap={80}>
-                    <div className="text-sm md:text-base font-semibold text-center">"Dengan mengingat Allah, hati menjadi tenang." (QS. Ar-Ra’d: 28)</div>
-                    <div className="text-sm md:text-base font-semibold text-center">"Dzikir adalah cahaya bagi hati yang gelap."</div>
-                    <div className="text-sm md:text-base font-semibold text-center">"Perbanyaklah mengingat Allah, karena itu yang terbaik bagi kalian."</div>
+                    <div className="text-sm md:text-base font-semibold text-center">{tHero("infiniteSlider")}</div>
+                    <div className="text-sm md:text-base font-semibold text-center">{tHero("infiniteSlider2")}</div>
+                    <div className="text-sm md:text-base font-semibold text-center">{tHero("infiniteSlider3")}</div>
                   </InfiniteSlider>
 
                   <div className="bg-linear-to-r from-background absolute inset-y-0 left-0 w-20"></div>

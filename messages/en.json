@@ -1,12 +1,42 @@
 {
-  "HomePage": {
-    "title": "HatiVision",
-    "description": "A smart assistant to help you navigate and understand your emotions."
-  },
   "MenuItem": {
     "home": "Home",
     "start": "Start",
     "features": "Features",
     "team": "Team"
+  },
+  "Hero": {
+    "title1": "Upload",
+    "title2": "an image to",
+    "title3": "detect emotions",
+    "button1": "Upload Image",
+    "button2": "Use AI",
+    "terms": "By uploading an image, you agree to our Terms of Use and Privacy Policy.",
+    "infiniteSlider": "Indeed, in the remembrance of Allah do hearts find peace. (QS. Ar-Ra’d: 28)",
+    "infiniteSlider2": "Dhikr is the light for a darkened heart.",
+    "infiniteSlider3": "Increase your remembrance of Allah, for it is the best for you."
+  },
+  "VoiceAI": {
+    "title1": "Voice AI",
+    "title2": "(Text to Speech)",
+    "textArea": "Enter text to convert into speech",
+    "button1": "Play Voice",
+    "button2": "Processing..."
+  },
+  "Feature": {
+    "title1": "Featured Features",
+    "title2": "hatiVision",
+    "description": "An AI-powered intelligent solution to accompany and understand your emotions.",
+    "feature1": "Facial Expression Detection",
+    "feature1Des": "Recognize and analyze facial expressions to understand emotions in real time through uploaded images.",
+    "feature2": "Voice AI for Dhikr",
+    "feature2Des": "Listen to and be guided in your daily dhikr with a calm and soothing voice powered by artificial intelligence.",
+    "feature3": "Voice AI for Confiding",
+    "feature3Des": "A companion ready to listen without judgment, whenever you need a space to share your feelings."
+  },
+  "Team": {
+    "title1": "Our Team",
+    "title2": "Dream Team",
+    "description": "We are a young team of developers committed to creating meaningful and human-centered AI solutions for your emotional well-being."
   }
 }

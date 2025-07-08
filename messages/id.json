@@ -1,12 +1,42 @@
 {
-  "HomePage": {
-    "title": "HatiVision",
-    "description": "Solusi cerdas berbasis AI untuk menemani dan memahami emosimu."
-  },
   "MenuItem": {
     "home": "Beranda",
     "start": "Mulai",
     "features": "Fitur",
     "team": "Tim"
+  },
+  "Hero": {
+    "title1": "Unggah",
+    "title2": "gambar untuk",
+    "title3": "mendeteksi emosi",
+    "button1": "Unggah Gambar",
+    "button2": "Gunakan AI",
+    "terms": "Dengan mengunggah gambar, Anda menyetujui kami Ketentuan Penggunaan dan Kebijakan Privasi.",
+    "infiniteSlider": "Dengan mengingat Allah, hati menjadi tenang. (QS. Ar-Ra’d: 28)",
+    "infiniteSlider2": "Dzikir adalah cahaya bagi hati yang gelap.",
+    "infiniteSlider3": "Perbanyaklah mengingat Allah, karena itu yang terbaik bagi kalian."
+  },
+  "VoiceAI": {
+    "title1": "Voice AI",
+    "title2": "(Tulisan ke Suara)",
+    "textArea": "Masukkan teks untuk diubah menjadi suara",
+    "button1": "Putar Suara",
+    "button2": "Memproses..."
+  },
+  "Feature": {
+    "title1": "Fitur Unggulan",
+    "title2": "hatiVision",
+    "description": "Solusi cerdas berbasis AI untuk menemani dan memahami emosimu.",
+    "feature1": "Deteksi Ekspresi Wajah",
+    "feature1Des": "Kenali dan analisis ekspresi wajah untuk mengetahui emosi secara real-time melalui gambar yang diunggah.",
+    "feature2": "Voice AI untuk Dzikir",
+    "feature2Des": "Mendengarkan dan membimbing dzikir harianmu dengan suara lembut dan tenang melalui kecerdasan buatan.",
+    "feature3": "Voice AI untuk Curhat",
+    "feature3Des": "Teman bercerita yang siap mendengarkan tanpa menghakimi, kapan pun kamu butuh tempat untuk mencurahkan isi hati."
+  },
+  "Team": {
+    "title1": "Tim Kami",
+    "title2": "Dream Team",
+    "description": "Kami adalah tim pengembang muda yang berkomitmen untuk menciptakan solusi AI yang bermakna dan manusiawi untuk kesehatan emosional kamu."
   }
 }

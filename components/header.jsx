@@ -11,7 +11,7 @@ import { useTranslations } from "next-intl";
 export const HeroHeader = () => {
   const [menuState, setMenuState] = React.useState(false);
   const [activeSection, setActiveSection] = useState("home");
-  const tMenu = useTranslations("MenuItem"); // ✅ Dijalankan dalam context
+  const tMenu = useTranslations("MenuItem");
 
   const menuItems = useMemo(
     () => [

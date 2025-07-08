@@ -1,6 +1,7 @@
 import AOSWrapper from "@/components/AOSProvider"; // sesuaikan path
 import Link from "next/link";
 import { LogoIcon } from "./logo";
+import { useTranslations } from "next-intl";
 
 // Data anggota tim
 const members = [
@@ -25,22 +26,24 @@ const members = [
 ];
 
 export default function TeamSection() {
+  const tTeam = useTranslations("Team");
+
   return (
     <section className="bg-zinc-50 dark:bg-violet-950/20 py-16 md:py-32">
       <AOSWrapper>
         <div className="mx-auto max-w-5xl border-t px-6">
           <span className="text-caption -ml-6 -mt-3.5 block w-max bg-gray-50 px-6 dark:bg-gray-950" data-aos="fade-up">
-            Tim Kami
+            {tTeam("title1")}
           </span>
 
           <div className="mt-12 gap-4 sm:grid sm:grid-cols-2 md:mt-24" data-aos="fade-up" data-aos-delay="100">
             <div className="sm:w-2/5">
               <h2 className="text-3xl font-bold sm:text-4xl">
-                Dream Team <LogoIcon className={"inline-block"}></LogoIcon>
+                {tTeam("title2")} <LogoIcon className={"inline-block"}></LogoIcon>
               </h2>
             </div>
             <div className="mt-6 sm:mt-0 text-muted-foreground">
-              <p>Kami adalah tim pengembang muda yang berkomitmen untuk menciptakan solusi AI yang bermakna dan manusiawi untuk kesehatan emosional kamu.</p>
+              <p>{tTeam("description")}</p>
             </div>
           </div>
 
