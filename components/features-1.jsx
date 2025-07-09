@@ -38,8 +38,8 @@ export default function Features() {
 
 function FeatureCard({ icon, title, desc, delay = 0 }) {
   return (
-    <div className="group relative overflow-hidden transition-all duration-300 ease-out" data-aos="fade-up" data-aos-delay={delay}>
-      <Card className="h-full bg-white/80 dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-700 transition duration-300 ease-in-out transform">
+    <div className="group relative transition-all duration-300 ease-out focus-within:scale-[1.02] active:scale-[1.02]" data-aos="fade-up" data-aos-delay={delay} tabIndex={0}>
+      <Card className="h-full bg-white/80 dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-700 transition duration-300 ease-in-out transform hover:scale-[1.02] focus:scale-[1.02] active:scale-[1.02]">
         <CardHeader className="pb-4 text-center">
           <CardDecorator>
             <div className="flex items-center justify-center">{icon}</div>
