@@ -118,6 +118,7 @@
   }
   html {
     @apply scroll-smooth;
+    color-scheme: normal !important;
   }
   body {
     @apply bg-background text-foreground;

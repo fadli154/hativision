@@ -31,7 +31,7 @@ export default async function LocaleLayout(props) {
   const messages = await getMessages();
 
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={locale} style={{ colorScheme: "normal" }} suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ClientLayout locale={locale} messages={messages}>
           {children}

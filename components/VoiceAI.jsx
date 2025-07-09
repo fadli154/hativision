@@ -15,17 +15,17 @@ export default function VoiceAI() {
   useEffect(() => {
     AOS.init({ duration: 800, once: true, easing: "ease-out-cubic" });
 
-    if (widgetRef.current && !widgetRef.current.hasChildNodes()) {
-      const convai = document.createElement("elevenlabs-convai");
-      convai.setAttribute("agent-id", "agent_01jzjwwt4zehwrf830n41xrs9v");
-      widgetRef.current.appendChild(convai);
+    // if (widgetRef.current && !widgetRef.current.hasChildNodes()) {
+    //   const convai = document.createElement("elevenlabs-convai");
+    //   convai.setAttribute("agent-id", "agent_01jzjwwt4zehwrf830n41xrs9v");
+    //   widgetRef.current.appendChild(convai);
 
-      const script = document.createElement("script");
-      script.src = "https://unpkg.com/@elevenlabs/convai-widget-embed";
-      script.async = true;
-      script.type = "text/javascript";
-      widgetRef.current.appendChild(script);
-    }
+    //   const script = document.createElement("script");
+    //   script.src = "https://unpkg.com/@elevenlabs/convai-widget-embed";
+    //   script.async = true;
+    //   script.type = "text/javascript";
+    //   widgetRef.current.appendChild(script);
+    // }
   }, []);
 
   const handleSynthesize = async () => {
