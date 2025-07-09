@@ -12,6 +12,7 @@ import { useState, useRef } from "react";
 import AOSWrapper from "@/components/AOSProvider";
 import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useEffect } from "react";
 
 export default function HeroSection() {
   const purple_gradiant = "bg-gradient-to-t from-transparent via-purple-800 to-transparent filter blur-[120px]";
@@ -22,6 +23,21 @@ export default function HeroSection() {
   const allowedTypes = ["image/png", "image/jpeg", "image/jpg"];
   const maxSizeMB = 5;
   const tHero = useTranslations("Hero");
+
+  useEffect(() => {
+    const handleDragEndOrDrop = () => {
+      setIsDragging(false);
+      dragCounter.current = 0;
+    };
+
+    window.addEventListener("dragend", handleDragEndOrDrop);
+    window.addEventListener("drop", handleDragEndOrDrop);
+
+    return () => {
+      window.removeEventListener("dragend", handleDragEndOrDrop);
+      window.removeEventListener("drop", handleDragEndOrDrop);
+    };
+  }, []);
 
   const validateFile = (file) => {
     if (!allowedTypes.includes(file.type)) {
@@ -86,13 +102,13 @@ export default function HeroSection() {
 
   return (
     <AOSWrapper>
+      {isDragging && (
+        <div className="fixed  inset-0 !z-[9999] bg-violet-400/30 border-2 border-dashed border-violet-500 flex justify-center items-center text-2xl font-semibold text-violet-700 pointer-events-none transition-all duration-300 ease-in-out animate-fade-in">
+          Lepaskan gambar untuk mengunggah...
+        </div>
+      )}
       <div id="home">
         <HeroHeader />
-        {isDragging && (
-          <div className="fixed inset-0 z-50 bg-violet-400/30 border-2 border-dashed border-violet-500 flex justify-center items-center text-2xl font-semibold text-violet-700 pointer-events-none transition-all duration-300 ease-in-out animate-fade-in">
-            Lepaskan gambar untuk mengunggah...
-          </div>
-        )}
 
         <main className="overflow-hidden min-h-dvh !z-3" onDrop={handleDrop} onDragOver={handleDragOver} onDragEnter={handleDragEnter} onDragLeave={handleDragLeave}>
           <section>
@@ -125,7 +141,7 @@ export default function HeroSection() {
                   <div className={`absolute -z-[2] w-[60%] h-[60%] lg:-right-140 -bottom-30 lg:bottom-20 ${purple_gradiant}`} />
                   {/* gradient end */}
                 </div>
-                <SplineClientOnly />
+                <SplineClientOnly isDragging={isDragging} />
                 <div className="flex justify-center items-center pt-15 -z-[1]">
                   <Image src="/img/image-mobile.png" alt="hero" className="w-[60%] h-[60%] md:w-[40%] md:h-[40%] lg:hidden" sizes="100vw" width={40} height={40} data-aos="zoom-in" data-aos-delay="500" priority />
                 </div>

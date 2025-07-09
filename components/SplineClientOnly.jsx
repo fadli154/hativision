@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export default function SplineClientOnly() {
+export default function SplineClientOnly({ isDragging }) {
   const [showSpline, setShowSpline] = useState(false);
 
   useEffect(() => {
@@ -18,10 +18,12 @@ export default function SplineClientOnly() {
   }, []);
 
   return (
-    <div className="hidden lg:block lg:h-[30vh] w-full bg-transparent dark:bg-transparent">
+    <div className="hidden lg:block lg:h-[30vh] w-full bg-transparent dark:bg-transparent !z-1">
       {showSpline && (
         <iframe
-          className="absolute hidden lg:block opacity-0 pointer-events-none lg:opacity-100 lg:pointer-events-auto lg:-top-22 2xl:-top-30 lg:-right-90 2xl:-right-90 2xl:scale-90 w-full h-full z-1"
+          className={`absolute hidden lg:block lg:opacity-100 lg:-top-22 2xl:-top-30 lg:-right-90 2xl:-right-90 2xl:scale-90 w-full h-full z-1 transition-all duration-200 ${
+            isDragging ? "pointer-events-none opacity-50" : "pointer-events-auto"
+          }`}
           src="https://my.spline.design/greetingrobot-iUu85Ge402EzwmE0W0Dh11WY/"
           allowFullScreen
           style={{
@@ -29,7 +31,7 @@ export default function SplineClientOnly() {
             overflow: "hidden",
             border: "none",
           }}
-          {...{ allowtransparency: "true" }}
+          allowtransparency="true"
         />
       )}
     </div>
