@@ -35,7 +35,7 @@ export default function FooterSection() {
   }, []);
 
   return (
-    <footer className="bg-background py-16 md:py-28 border-t border-muted">
+    <footer className="bg-background py-18 md:py-30 border-t border-muted">
       <div className="mx-auto max-w-6xl px-6">
         {/* Logo */}
         <div className="flex justify-center mb-8" data-aos="fade-up">
