@@ -14,7 +14,10 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   return {
-    title: `hatiVision - Landing Page`,
+    title: "hatiVision - Landing Page",
+    icons: {
+      icon: "/favicon.ico", // ← tambahkan baris ini
+    },
   };
 }
 

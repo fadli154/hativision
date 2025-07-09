@@ -63,9 +63,7 @@ export default function FooterSection() {
         </div>
 
         {/* Copyright */}
-        <div className="text-center text-sm text-muted-foreground" data-aos="fade-up" data-aos-delay="300">
-          © {new Date().getFullYear()} hatiVision. All rights reserved.
-        </div>
+        <div className="text-center text-sm text-muted-foreground">© {new Date().getFullYear()} hatiVision. All rights reserved.</div>
       </div>
     </footer>
   );
