@@ -104,7 +104,7 @@ export const HeroHeader = () => {
                   ))}
                 </ul>
               </div>
-              <div className="flex w-full justify-center item-center space-x-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
+              <div className="flex w-full justify-center item-center space-x-3 lg:space-x-0 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
                 <ModeToggle />
                 <LocaleSwitcher />
               </div>

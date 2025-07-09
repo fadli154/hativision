@@ -1,21 +1,25 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
-const Spline = dynamic(() => import("@splinetool/react-spline"), { ssr: false });
+// ⬇️ Import default langsung, TANPA .then()
+const Spline = dynamic(() => import("@splinetool/react-spline"), {
+  ssr: false,
+  loading: () => <div className="text-center py-10">Loading 3D...</div>,
+});
 
-export default function SplineTest() {
+export default function SplineClientOnly() {
   const [showSpline, setShowSpline] = useState(false);
 
   useEffect(() => {
-    // Jalankan hanya di client
     if (typeof window !== "undefined") {
       const handleResize = () => {
-        setShowSpline(window.innerWidth >= 1024); // Tailwind breakpoint lg = 1024px
+        setShowSpline(window.innerWidth >= 1024); // Tailwind breakpoint lg
       };
 
-      handleResize(); // Cek pertama kali
-      window.addEventListener("resize", handleResize); // Update saat resize
+      handleResize();
+      window.addEventListener("resize", handleResize);
 
       return () => window.removeEventListener("resize", handleResize);
     }
