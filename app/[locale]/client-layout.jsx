@@ -9,7 +9,7 @@ export default function ClientLayout({ children, locale, messages }) {
   return (
     <LoadingProvider>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-        <NextIntlClientProvider locale={locale} messages={messages}>
+        <NextIntlClientProvider locale={locale} messages={messages} timeZone="Asia/Jakarta">
           {children}
         </NextIntlClientProvider>
       </ThemeProvider>
