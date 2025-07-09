@@ -6,7 +6,16 @@ import VoiceAI from "@/components/VoiceAI";
 import ChatVoiceAI from "@/components/ChatVoiceAI";
 import VoiceConversation from "@/components/VoiceConversation";
 
-export default function Home() {
+// ✅ Tambahkan ini
+export async function generateStaticParams() {
+  return [{ locale: "en" }, { locale: "id" }];
+}
+
+// ✅ Akses param `locale` jika diperlukan
+export default function Home({ params }) {
+  // contoh kalau mau akses locale
+  const { locale } = params;
+
   return (
     <>
       <HeroSection />
