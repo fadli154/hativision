@@ -19,9 +19,10 @@ export default function Features() {
     <section className="py-16 md:py-28 bg-background">
       <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8" data-aos="fade-up">
         <div className="text-center mb-12" data-aos="fade-up">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight tracking-tight">
+          <h2 className="relative text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight tracking-tight before:content-[''] before:absolute before:top-0 before:left-1/2 before:-translate-x-1/2 before:-translate-y-full before:w-[8%] before:h-1 before:bg-purple-500 before:rounded-full pt-2">
             {tFeature("title1")} <span className="text-purple-500">{tFeature("title2")}</span>
           </h2>
+
           <p className="mt-4 text-muted-foreground text-sm sm:text-base">{tFeature("description")}</p>
         </div>
 

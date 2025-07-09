@@ -38,5 +38,10 @@
     "title1": "Our Team",
     "title2": "Dream Team",
     "description": "We are a young team of developers committed to creating meaningful and human-centered AI solutions for your emotional well-being."
+  },
+  "ModeToggle": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
   }
 }

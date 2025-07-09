@@ -38,5 +38,10 @@
     "title1": "Tim Kami",
     "title2": "Dream Team",
     "description": "Kami adalah tim pengembang muda yang berkomitmen untuk menciptakan solusi AI yang bermakna dan manusiawi untuk kesehatan emosional kamu."
+  },
+  "ModeToggle": {
+    "light": "Terang",
+    "dark": "Gelap",
+    "system": "Sistem"
   }
 }
