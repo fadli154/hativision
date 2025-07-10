@@ -132,7 +132,7 @@ export default function HeroSection() {
                   </div>
 
                   <div className="flex justify-center items-center lg:justify-start lg:items-start relative !z-2">
-                    <div className="grid grid-cols-2 gap-4 pt-6 w-[calc(100%-0.1rem)]" data-aos="fade-up" data-aos-delay="300">
+                    <div className="grid grid-cols-2 gap-4 pt-6 w-full" data-aos="fade-up" data-aos-delay="300">
                       <ImageUploader icon="search-image" className="border-red-500/30 hover:shadow-red-500/30 hover:border-red-500/50 " via="via-red-400/20" onFileChange={handleManualUpload}>
                         {tHero("button1")}
                       </ImageUploader>
@@ -153,7 +153,7 @@ export default function HeroSection() {
               </div>
             </div>
           </section>
-          <section className="bg-background pb-10 md:pt-0">
+          <section className="bg-background pb-10 md:pb-0 md:pt-0">
             <div className="group relative 2xl:-top-40 top-10 lg:-top-20  m-auto max-w-6xl px-6">
               <div className="flex flex-col items-center justify-center md:flex-row">
                 <div className="relative py-6 md:w-[calc(100%-11rem)]">

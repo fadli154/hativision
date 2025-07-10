@@ -32,7 +32,7 @@ export default function TeamSection() {
     <section className="bg-zinc-50 dark:bg-violet-950/20 py-16 md:py-32 px-6">
       <AOSWrapper>
         <div className="mx-auto max-w-5xl border-t">
-          <span className="text-caption ml-0 sm:-ml-6 -mt-3.5 block w-max rounded-sm px-6 bg-zinc-200 dark:bg-violet-950" data-aos="fade-up">
+          <span className="text-caption ml-0 -mt-3.5 block w-max rounded-sm px-6 bg-zinc-200 dark:bg-violet-950" data-aos="fade-up">
             {tTeam("title1")}
           </span>
 
@@ -42,7 +42,7 @@ export default function TeamSection() {
                 {tTeam("title2")} <LogoIcon className={"inline-block"}></LogoIcon>
               </h2>
             </div>
-            <div className="mt-6 sm:mt-0 text-muted-foreground">
+            <div className="mt-6 sm:mt-0 text-muted-foreground align-middle flex justify-center items-center">
               <p>{tTeam("description")}</p>
             </div>
           </div>
