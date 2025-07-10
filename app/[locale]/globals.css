@@ -137,6 +137,42 @@
       transform: translateY(0);
     }
   }
+
+  .neon-border-wrapper {
+    position: relative;
+    border-radius: 1rem;
+    padding: 2px;
+    background: linear-gradient(270deg, #a855f7, #9333ea, #c084fc, #a855f7);
+    background-size: 800% 800%;
+    animation: border-glow 6s ease-in-out infinite;
+    box-shadow: 0 0 12px #c084fc66, 0 0 20px #a855f788;
+  }
+
+  @keyframes border-glow {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes neon-border {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 100% 50%;
+    }
+  }
+
+  .animate-neon-border {
+    animation: neon-border 2s ease-in-out infinite;
+  }
+
   .animate-fade-in {
     @apply opacity-0 animate-[fadeIn_0.3s_ease-in-out_forwards];
   }

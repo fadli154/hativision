@@ -14,14 +14,23 @@ export default function ImagePreviewModal({ imageUrl, onClose }) {
   const t = useTranslations("ModalFaceDetection");
 
   useEffect(() => {
-    setIsOpen(!!imageUrl);
+    if (!imageUrl) return;
 
-    const modalWidth = Math.min(window.innerWidth * 0.9, 768);
-    const modalHeight = window.innerWidth < 768 ? 300 : 400;
-    const offsetY = window.innerWidth < 768 ? 120 : 0; // 🔼 lebih tinggi di mobile
-    const centerX = (window.innerWidth - modalWidth) / 2;
-    const centerY = (window.innerHeight - modalHeight) / 2 - offsetY;
-    setPosition({ x: centerX, y: Math.max(20, centerY) }); // minimal top 20px
+    setIsOpen(true);
+
+    // Delay agar modalRef sudah tersedia di DOM
+    setTimeout(() => {
+      if (modalRef.current) {
+        const rect = modalRef.current.getBoundingClientRect();
+        const centerX = (window.innerWidth - rect.width) / 2;
+        const centerY = (window.innerHeight - rect.height) / 2;
+
+        setPosition({
+          x: Math.max(10, centerX),
+          y: Math.max(20, centerY),
+        });
+      }
+    }, 0);
   }, [imageUrl]);
 
   const handleClose = () => {
@@ -84,47 +93,52 @@ export default function ImagePreviewModal({ imageUrl, onClose }) {
               left: `${position.x}px`,
               zIndex: 50,
               width: "90vw",
-              maxWidth: "768px",
-              minWidth: "300px",
+              maxWidth: "600px",
+              minWidth: "280px",
             }}
-            className="overflow-visible rounded-xl border border-border shadow-2xl p-8 bg-white dark:bg-zinc-950 cursor-move"
+            className="overflow-visible rounded-xl shadow-xl cursor-move neon-border-wrapper animate-float px-4 sm:px-6"
           >
-            {/* Header */}
-            <div className="relative select-none pb-4">
-              <h2 className="text-xl text-center w-full font-semibold">{t("title")}</h2>
-              <button
-                onClick={handleClose}
-                className="absolute -top-5 -right-5 w-7 h-7 flex items-center justify-center rounded-full border border-red-300 bg-white text-red-500 shadow-sm hover:bg-red-500 hover:text-white hover:scale-110 hover:rotate-12 focus:bg-red-500 focus:text-white focus:scale-110 focus:rotate-12 active:scale-95 transition-all duration-300 ease-in-out dark:bg-zinc-900 dark:hover:bg-red-600 dark:focus:bg-red-600 cursor-pointer outline-none"
-                aria-label="Tutup modal"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Konten */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2 items-start">
-              {/* Gambar */}
-              <div className="relative w-full flex justify-center items-center">
-                {imageUrl && (
-                  <div className="relative w-full max-w-[200px] md:max-w-[300px]">
-                    <div className="w-full aspect-[3/4] relative">
-                      <img src={imageUrl} alt="Preview" className="absolute inset-0 w-full h-full object-contain rounded-md border shadow-sm" />
-                      <div className="absolute border-2 border-blue-500 rounded-sm" style={{ top: "10%", left: "25%", width: "100px", height: "100px" }}>
-                        <span className="absolute -top-6 left-0 bg-blue-500 text-white text-xs px-2 py-0.5 rounded">😊 Senang</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
+            <div className="rounded-[inherit] p-6 bg-white/70 dark:bg-zinc-900/80 backdrop-blur-md border border-white/10 dark:border-zinc-700 animate-fade-in-up">
+              {/* Header */}
+              <div className="relative select-none pb-4">
+                <h2 className="text-xl text-center w-full font-semibold">{t("title")}</h2>
+                <button
+                  onClick={handleClose}
+                  className="absolute -top-4 -right-4 w-8 h-8 flex items-center justify-center rounded-full border border-red-300 bg-white text-red-500 shadow-sm hover:bg-red-500 hover:text-white hover:scale-110 hover:rotate-12 focus:scale-110 active:scale-95 transition-all duration-300 ease-in-out dark:bg-zinc-900 dark:hover:bg-red-600 outline-none"
+                  aria-label="Tutup modal"
+                >
+                  <X className="w-5 h-5" />
+                </button>
               </div>
 
-              {/* Dzikir */}
-              <div className="flex flex-col justify-center items-center h-full text-center w-full space-y-4">
-                <p className="text-lg font-semibold">Ekspresi: 😊 Senang</p>
-                <p className="text-sm text-muted-foreground">Rekomendasi Dzikir:</p>
-                <p dir="rtl" className="text-2xl font-semibold text-blue-700 dark:text-blue-400 leading-relaxed">
-                  ٱلْـحَـمْـدُ لِلّٰهِ
-                </p>
-                <p className="text-sm text-gray-600 dark:text-gray-300 italic">Segala puji bagi Allah</p>
+              {/* Konten */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2 items-start">
+                {/* Gambar */}
+                <div className="relative w-full flex justify-center items-center">
+                  {imageUrl && (
+                    <div className="relative w-full max-w-[160px] md:max-w-[240px] transition-transform duration-300 hover:scale-[1.03]">
+                      <div className="w-full aspect-[3/4] relative rounded-lg overflow-hidden">
+                        <img src={imageUrl} alt="Preview" className="absolute inset-0 w-full h-full object-contain rounded-md drop-shadow-xl drop-shadow-violet-500/20" />
+                        <div
+                          className="absolute border-2 border-violet-500 rounded-sm"
+                          style={{ top: "15%", left: "25%", width: "100px", height: "100px" }} // 🔽 diperkecil
+                        >
+                          <span className="absolute w-fit -top-5 left-0 bg-violet-500 text-white text-xs px-2 py-0.5 rounded">😊 Senang</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Dzikir */}
+                <div className="flex flex-col justify-center items-center h-full text-center w-full space-y-3">
+                  <p className="text-base font-semibold">Ekspresi: 😊 Senang</p>
+                  <p className="text-sm text-muted-foreground">Rekomendasi Dzikir:</p>
+                  <p dir="rtl" className="text-xl font-semibold text-violet-700 dark:text-violet-400 leading-relaxed drop-shadow-md dark:drop-shadow-[0_0_10px_#a855f7] transition-all duration-300">
+                    ٱلْـحَـمْـدُ لِلّٰهِ
+                  </p>
+                  <p className="text-xs text-gray-600 dark:text-gray-300 italic">Segala puji bagi Allah</p>
+                </div>
               </div>
             </div>
           </div>
