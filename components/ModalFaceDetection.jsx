@@ -102,10 +102,12 @@ export default function ImagePreviewModal({ imageUrl, onClose }) {
               {/* Gambar */}
               <div className="relative w-full flex justify-center items-center">
                 {imageUrl && (
-                  <div className="relative w-full max-w-[200px] max-h-[250px] md:max-w-[300px] md:max-h-[400px]">
-                    <img src={imageUrl} alt="Preview" className="object-contain rounded-md border shadow-md w-full h-full" />
-                    <div className="absolute border-2 border-blue-500 rounded-sm" style={{ top: "10%", left: "25%", width: "100px", height: "100px" }}>
-                      <span className="absolute -top-6 left-0 bg-blue-500 text-white text-xs px-2 py-0.5 rounded">😊 Senang</span>
+                  <div className="relative w-full max-w-[200px] md:max-w-[300px]">
+                    <div className="w-full aspect-[3/4] md:aspect-[3/4] relative">
+                      <img src={imageUrl} alt="Preview" className="absolute inset-0 w-full h-full object-contain rounded-md border shadow-sm" />
+                      <div className="absolute border-2 border-blue-500 rounded-sm" style={{ top: "10%", left: "25%", width: "100px", height: "100px" }}>
+                        <span className="absolute -top-6 left-0 bg-blue-500 text-white text-xs px-2 py-0.5 rounded">😊 Senang</span>
+                      </div>
                     </div>
                   </div>
                 )}
