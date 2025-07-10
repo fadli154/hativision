@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { locales } from "@/i18n/i18n";
 import "@/app/[locale]/globals.css";
 import ClientLayout from "./client-layout"; // ← komponen client
+import { ChatbotProvider } from "@/context/chatbotcontext";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -37,7 +38,7 @@ export default async function LocaleLayout(props) {
     <html lang={locale} style={{ colorScheme: "normal" }} suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ClientLayout locale={locale} messages={messages}>
-          {children}
+          <ChatbotProvider>{children}</ChatbotProvider>
         </ClientLayout>
       </body>
     </html>

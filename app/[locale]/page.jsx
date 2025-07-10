@@ -5,6 +5,7 @@ import TeamSection from "@/components/team";
 import VoiceAI from "@/components/VoiceAI";
 import ChatVoiceAI from "@/components/ChatVoiceAI";
 import VoiceConversation from "@/components/VoiceConversation";
+import ChatbotUI from "@/components/ChatBotUI";
 
 export default function Home({ params }) {
   return (
@@ -25,6 +26,7 @@ export default function Home({ params }) {
       <section id="team">
         <TeamSection />
       </section>
+      <ChatbotUI />
       <FooterSection />
     </>
   );

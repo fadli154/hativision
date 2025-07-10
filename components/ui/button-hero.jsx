@@ -1,9 +1,15 @@
+"use client";
+
 import Image from "next/image";
+import { useChatbot } from "@/context/chatbotcontext";
 
 const ButtonHero = ({ className, children, icon, via }) => {
+  const { setIsOpen } = useChatbot(); // ✅ Ambil dari context
+
   return (
     <button
       tabIndex={0}
+      onClick={() => setIsOpen(true)} // ✅ Buka chatbot saat klik
       className={`${className} p-5 rounded-lg backdrop-blur-lg border bg-transparent shadow-md hover:shadow-md hover:scale-105 focus:scale-105 active:scale-95 transition-all duration-300 ease-out cursor-pointer group relative overflow-hidden !z-3 focus-visible:outline-none`}
     >
       <div className={`absolute inset-0 bg-gradient-to-r from-transparent ${via} to-transparent -translate-x-full group-hover:translate-x-full group-focus:translate-x-full transition-transform duration-700 ease-out`}></div>
