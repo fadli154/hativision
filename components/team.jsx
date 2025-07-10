@@ -9,7 +9,7 @@ const members = [
     name: "Fadli Hifziansyah",
     role: "Project Planner & Frontend",
     avatar: "https://alt.tailus.io/images/team/member-one.webp",
-    link: "#",
+    link: "https://Instagram.com/fadli.890",
   },
   {
     name: "Azka Maulana",
@@ -68,7 +68,7 @@ export default function TeamSection() {
                     >
                       {member.name}
                     </h3>
-                    <span className="text-xs">_0{index + 1}</span>
+                    <span className="text-xs">0{index + 1}</span>
                   </div>
                   <div className="mt-1 flex items-center justify-between">
                     <span
@@ -89,7 +89,7 @@ export default function TeamSection() {
                     group-focus:translate-y-0 group-focus:opacity-100
                     group-active:translate-y-0 group-active:opacity-100"
                     >
-                      Linktree
+                      Instagram
                     </Link>
                   </div>
                 </div>

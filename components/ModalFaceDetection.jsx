@@ -3,6 +3,7 @@
 import { Dialog, DialogOverlay, DialogPortal } from "@/components/ui/dialog";
 import { X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 
 export default function ImagePreviewModal({ imageUrl, onClose }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,16 +11,17 @@ export default function ImagePreviewModal({ imageUrl, onClose }) {
   const [dragging, setDragging] = useState(false);
   const modalRef = useRef(null);
   const offsetRef = useRef({ x: 0, y: 0 });
+  const t = useTranslations("ModalFaceDetection");
 
   useEffect(() => {
     setIsOpen(!!imageUrl);
 
-    const modalWidth = Math.min(window.innerWidth * 0.9, 768); // max 768px
-    const modalHeight = window.innerWidth < 768 ? 300 : 400; // modal lebih kecil di mobile
-    const offsetY = window.innerWidth < 768 ? 80 : 0; // geser ke atas jika mobile
+    const modalWidth = Math.min(window.innerWidth * 0.9, 768);
+    const modalHeight = window.innerWidth < 768 ? 300 : 400;
+    const offsetY = window.innerWidth < 768 ? 120 : 0; // 🔼 lebih tinggi di mobile
     const centerX = (window.innerWidth - modalWidth) / 2;
     const centerY = (window.innerHeight - modalHeight) / 2 - offsetY;
-    setPosition({ x: centerX, y: centerY });
+    setPosition({ x: centerX, y: Math.max(20, centerY) }); // minimal top 20px
   }, [imageUrl]);
 
   const handleClose = () => {
@@ -28,7 +30,7 @@ export default function ImagePreviewModal({ imageUrl, onClose }) {
   };
 
   const handleMouseDown = (e) => {
-    e.preventDefault(); // cegah seleksi teks saat drag
+    e.preventDefault();
     setDragging(true);
     const rect = modalRef.current.getBoundingClientRect();
     offsetRef.current = {
@@ -69,7 +71,9 @@ export default function ImagePreviewModal({ imageUrl, onClose }) {
     isOpen && (
       <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()} modal={false}>
         <DialogPortal>
-          <DialogOverlay className="bg-black/60 backdrop-blur-sm fixed inset-0 z-40" />
+          <div className="fixed inset-0 z-40">
+            <DialogOverlay className="bg-black/60 backdrop-blur-sm w-full h-full" />
+          </div>
 
           <div
             ref={modalRef}
@@ -87,10 +91,10 @@ export default function ImagePreviewModal({ imageUrl, onClose }) {
           >
             {/* Header */}
             <div className="relative select-none pb-4">
-              <h2 className="text-xl text-center w-full font-semibold">Preview Gambar Anda (Face Detection)</h2>
+              <h2 className="text-xl text-center w-full font-semibold">{t("title")}</h2>
               <button
                 onClick={handleClose}
-                className="absolute -top-5 -right-5 w-7 h-7 flex items-center justify-center rounded-full border border-red-300 bg-white text-red-500 shadow-sm hover:bg-red-500 hover:text-white transition-all duration-300 ease-in-out hover:scale-110 active:scale-95 hover:rotate-12 dark:bg-zinc-900 dark:hover:bg-red-600 cursor-pointer"
+                className="absolute -top-5 -right-5 w-7 h-7 flex items-center justify-center rounded-full border border-red-300 bg-white text-red-500 shadow-sm hover:bg-red-500 hover:text-white hover:scale-110 hover:rotate-12 focus:bg-red-500 focus:text-white focus:scale-110 focus:rotate-12 active:scale-95 transition-all duration-300 ease-in-out dark:bg-zinc-900 dark:hover:bg-red-600 dark:focus:bg-red-600 cursor-pointer outline-none"
                 aria-label="Tutup modal"
               >
                 <X className="w-4 h-4" />
@@ -103,7 +107,7 @@ export default function ImagePreviewModal({ imageUrl, onClose }) {
               <div className="relative w-full flex justify-center items-center">
                 {imageUrl && (
                   <div className="relative w-full max-w-[200px] md:max-w-[300px]">
-                    <div className="w-full aspect-[3/4] md:aspect-[3/4] relative">
+                    <div className="w-full aspect-[3/4] relative">
                       <img src={imageUrl} alt="Preview" className="absolute inset-0 w-full h-full object-contain rounded-md border shadow-sm" />
                       <div className="absolute border-2 border-blue-500 rounded-sm" style={{ top: "10%", left: "25%", width: "100px", height: "100px" }}>
                         <span className="absolute -top-6 left-0 bg-blue-500 text-white text-xs px-2 py-0.5 rounded">😊 Senang</span>
