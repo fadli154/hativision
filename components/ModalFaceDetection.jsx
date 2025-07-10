@@ -13,8 +13,12 @@ export default function ImagePreviewModal({ imageUrl, onClose }) {
 
   useEffect(() => {
     setIsOpen(!!imageUrl);
-    const centerX = window.innerWidth / 2 - 300;
-    const centerY = window.innerHeight / 2 - 200;
+
+    const modalWidth = Math.min(window.innerWidth * 0.9, 768); // max 768px
+    const modalHeight = window.innerWidth < 768 ? 300 : 400; // modal lebih kecil di mobile
+    const offsetY = window.innerWidth < 768 ? 80 : 0; // geser ke atas jika mobile
+    const centerX = (window.innerWidth - modalWidth) / 2;
+    const centerY = (window.innerHeight - modalHeight) / 2 - offsetY;
     setPosition({ x: centerX, y: centerY });
   }, [imageUrl]);
 
@@ -24,8 +28,7 @@ export default function ImagePreviewModal({ imageUrl, onClose }) {
   };
 
   const handleMouseDown = (e) => {
-    // Cegah text selection
-    e.preventDefault();
+    e.preventDefault(); // cegah seleksi teks saat drag
     setDragging(true);
     const rect = modalRef.current.getBoundingClientRect();
     offsetRef.current = {
@@ -70,7 +73,7 @@ export default function ImagePreviewModal({ imageUrl, onClose }) {
 
           <div
             ref={modalRef}
-            onMouseDown={handleMouseDown} // Bisa drag dari seluruh area
+            onMouseDown={handleMouseDown}
             style={{
               position: "fixed",
               top: `${position.y}px`,
@@ -78,6 +81,7 @@ export default function ImagePreviewModal({ imageUrl, onClose }) {
               zIndex: 50,
               width: "90vw",
               maxWidth: "768px",
+              minWidth: "300px",
             }}
             className="overflow-visible rounded-xl border border-border shadow-2xl p-8 bg-white dark:bg-zinc-950 cursor-move"
           >
@@ -93,13 +97,13 @@ export default function ImagePreviewModal({ imageUrl, onClose }) {
               </button>
             </div>
 
-            {/* Isi konten */}
+            {/* Konten */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2 items-start">
               {/* Gambar */}
               <div className="relative w-full flex justify-center items-center">
                 {imageUrl && (
-                  <div className="relative max-w-[300px] max-h-[400px] w-full">
-                    <img src={imageUrl} alt="Preview" className="max-h-[400px] max-w-full object-contain rounded-md border shadow-md" />
+                  <div className="relative w-full max-w-[200px] max-h-[250px] md:max-w-[300px] md:max-h-[400px]">
+                    <img src={imageUrl} alt="Preview" className="object-contain rounded-md border shadow-md w-full h-full" />
                     <div className="absolute border-2 border-blue-500 rounded-sm" style={{ top: "10%", left: "25%", width: "100px", height: "100px" }}>
                       <span className="absolute -top-6 left-0 bg-blue-500 text-white text-xs px-2 py-0.5 rounded">😊 Senang</span>
                     </div>
@@ -107,8 +111,8 @@ export default function ImagePreviewModal({ imageUrl, onClose }) {
                 )}
               </div>
 
-              {/* Konten Dzikir */}
-              <div className="flex flex-col justify-center items-center text-center space-y-4">
+              {/* Dzikir */}
+              <div className="flex flex-col justify-center items-center h-full text-center w-full space-y-4">
                 <p className="text-lg font-semibold">Ekspresi: 😊 Senang</p>
                 <p className="text-sm text-muted-foreground">Rekomendasi Dzikir:</p>
                 <p dir="rtl" className="text-2xl font-semibold text-blue-700 dark:text-blue-400 leading-relaxed">
