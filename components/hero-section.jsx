@@ -13,6 +13,7 @@ import AOSWrapper from "@/components/AOSProvider";
 import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect } from "react";
+import ImagePreviewModal from "@/components/ModalFaceDetection";
 
 export default function HeroSection() {
   const purple_gradiant = "bg-gradient-to-t from-transparent via-purple-800 to-transparent filter blur-[120px]";
@@ -38,6 +39,10 @@ export default function HeroSection() {
       window.removeEventListener("drop", handleDragEndOrDrop);
     };
   }, []);
+
+  setTimeout(() => {
+    previewRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, 200);
 
   const validateFile = (file) => {
     if (!allowedTypes.includes(file.type)) {
@@ -166,26 +171,7 @@ export default function HeroSection() {
               </div>
             </div>
           </section>
-          {droppedImage && (
-            <div ref={previewRef} className="mb-10 mt-5 flex justify-center p-4 relative">
-              <div className="relative border rounded-lg shadow-lg max-w-sm w-full">
-                {/* Tombol X */}
-                <button
-                  onClick={() => setDroppedImage(null)}
-                  className="absolute -top-3 -right-3 w-7 h-7 flex items-center justify-center rounded-full border border-red-300 bg-white text-red-500 
-             shadow-sm hover:bg-red-500 hover:text-white transition-all duration-300 ease-in-out
-             hover:scale-110 active:scale-95 hover:rotate-12 dark:bg-zinc-900 dark:hover:bg-red-600 cursor-pointer"
-                  aria-label="Hapus gambar"
-                >
-                  <X className="text-lg leading-none font-bold w-4 h-4" />
-                </button>
-
-                {/* Gambar Preview */}
-                <img src={droppedImage} alt="Preview" className="w-full h-auto object-cover" />
-                <div className="p-2 text-center text-sm text-slate-600 dark:text-slate-300">Preview Gambar Anda</div>
-              </div>
-            </div>
-          )}
+          <ImagePreviewModal imageUrl={droppedImage} onClose={() => setDroppedImage(null)} />
         </main>
       </div>
     </AOSWrapper>
