@@ -221,16 +221,18 @@ export default function ChatbotUI() {
             className="rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 shadow-2xl overflow-hidden"
           >
             {/* Header */}
-            <div className="chat-header flex items-center justify-between p-4 border-b border-zinc-200 dark:border-zinc-700 bg-gradient-to-r from-violet-500 to-indigo-500 text-white select-none cursor-move">
+            <div className="chat-header relative flex items-center justify-between p-4 border-b border-zinc-200 dark:border-zinc-700 bg-gradient-to-r from-violet-500 to-indigo-500 text-white select-none cursor-move">
               <h2 className="font-semibold text-lg">AI Assistant</h2>
               <div className="flex items-center gap-2">
                 <motion.button onClick={() => setIsMuted((prev) => !prev)} whileTap={{ scale: 0.9 }} className="p-2 rounded-full border border-white/20 hover:bg-white/10 transition">
                   {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
                 </motion.button>
-                <button onClick={toggleChat} className="hover:scale-110 ml-1 transition-transform focus:outline-none rounded-full">
-                  <motion.div whileTap={{ rotate: 90 }}>
-                    <X className="w-5 h-5" />
-                  </motion.div>
+                <button
+                  onClick={toggleChat}
+                  className=" w-8 h-8 flex items-center justify-center rounded-full border border-white/20 bg-transparent text-white shadow-sm hover:bg-red-500 hover:text-white hover:scale-110 hover:rotate-12 focus:scale-110 active:scale-95 transition-all duration-300 ease-in-out  dark:hover:bg-red-600 outline-none"
+                  aria-label="Tutup modal"
+                >
+                  <X className="w-5 h-5" />
                 </button>
               </div>
             </div>
