@@ -22,18 +22,21 @@ export default function ChatbotUI() {
   const offsetRef = useRef({ x: 0, y: 0 });
   const isMutedRef = useRef(false);
   const [dragging, setDragging] = useState(false);
-  const [position, setPosition] = useState({ x: 20, y: 400 });
+  const [position, setPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const padding = 24;
-      const buttonSize = 56;
-      const modalHeight = 400;
-      const modalWidth = 400;
-      const y = window.innerHeight - buttonSize - modalHeight - padding;
-      const x = window.innerWidth - modalWidth - padding;
-      setPosition({ x, y });
       setIsClient(true);
+      requestAnimationFrame(() => {
+        if (modalRef.current) {
+          const rect = modalRef.current.getBoundingClientRect();
+          const buttonSize = 56;
+          const gap = 16;
+          const x = window.innerWidth - rect.width - 24;
+          const y = window.innerHeight - rect.height - buttonSize - gap - 24;
+          setPosition({ x: Math.max(10, x), y: Math.max(10, y) });
+        }
+      });
     }
   }, []);
 
@@ -63,11 +66,14 @@ export default function ChatbotUI() {
   };
 
   const handleMouseMove = (e) => {
-    if (dragging) {
-      const newX = Math.max(0, Math.min(e.clientX - offsetRef.current.x, window.innerWidth - 400));
-      const newY = Math.max(0, Math.min(e.clientY - offsetRef.current.y, window.innerHeight - 360));
-      setPosition({ x: newX, y: newY });
-    }
+    if (!dragging || !modalRef.current) return;
+
+    const modalRect = modalRef.current.getBoundingClientRect();
+
+    const newX = Math.max(0, Math.min(e.clientX - offsetRef.current.x, window.innerWidth - modalRect.width));
+    const newY = Math.max(0, Math.min(e.clientY - offsetRef.current.y, window.innerHeight - modalRect.height));
+
+    setPosition({ x: newX, y: newY });
   };
 
   const handleMouseUp = () => setDragging(false);
@@ -203,8 +209,8 @@ export default function ChatbotUI() {
             }}
             style={{
               position: "fixed",
-              top: position.y,
-              left: position.x,
+              right: "24px",
+              bottom: `${56 + 16 + 24}px`,
               zIndex: 1000,
               width: "92vw",
               maxWidth: "400px",
@@ -217,11 +223,16 @@ export default function ChatbotUI() {
             {/* Header */}
             <div className="chat-header flex items-center justify-between p-4 border-b border-zinc-200 dark:border-zinc-700 bg-gradient-to-r from-violet-500 to-indigo-500 text-white select-none cursor-move">
               <h2 className="font-semibold text-lg">AI Assistant</h2>
-              <button onClick={toggleChat} className="hover:scale-110 transition-transform focus:outline-none rounded-full">
-                <motion.div whileTap={{ rotate: 90 }}>
-                  <X className="w-5 h-5" />
-                </motion.div>
-              </button>
+              <div className="flex items-center gap-2">
+                <motion.button onClick={() => setIsMuted((prev) => !prev)} whileTap={{ scale: 0.9 }} className="p-2 rounded-full border border-white/20 hover:bg-white/10 transition">
+                  {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                </motion.button>
+                <button onClick={toggleChat} className="hover:scale-110 ml-1 transition-transform focus:outline-none rounded-full">
+                  <motion.div whileTap={{ rotate: 90 }}>
+                    <X className="w-5 h-5" />
+                  </motion.div>
+                </button>
+              </div>
             </div>
 
             {/* Chat */}
@@ -275,13 +286,6 @@ export default function ChatbotUI() {
                 } hover:text-violet-500 transition focus:outline-none focus:ring-2 focus:ring-violet-500 disabled:opacity-50`}
               >
                 <Mic className="w-4 h-4" />
-              </motion.button>
-              <motion.button
-                onClick={() => setIsMuted((prev) => !prev)}
-                whileTap={{ scale: 0.9 }}
-                className="p-2 rounded-full border text-zinc-500 border-zinc-300 dark:border-zinc-600 hover:text-violet-500 transition focus:outline-none focus:ring-2 focus:ring-violet-500"
-              >
-                {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
               </motion.button>
             </div>
           </motion.div>
