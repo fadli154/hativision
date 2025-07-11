@@ -15,7 +15,11 @@ export default function ChatbotUI() {
   const [isTyping, setIsTyping] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [isClient, setIsClient] = useState(false);
+  const speechQueueRef = useRef(null);
+  const currentWordsRef = useRef([]);
+  const currentWordIndexRef = useRef(0);
 
+  const utteranceRef = useRef(null);
   const chatRef = useRef(null);
   const recognitionRef = useRef(null);
   const modalRef = useRef(null);
@@ -121,15 +125,23 @@ export default function ChatbotUI() {
   };
 
   const speak = (text) => {
-    if (isMutedRef.current) return Promise.resolve();
+    if (isMutedRef.current) {
+      speechQueueRef.current = { words: text.split(" "), index: 0 };
+      return Promise.resolve();
+    }
+
     return new Promise((resolve) => {
       const utter = new SpeechSynthesisUtterance(text);
       utter.lang = "id-ID";
-      setIsSpeaking(true);
+
       utter.onend = () => {
         setIsSpeaking(false);
+        speechQueueRef.current = null;
         resolve();
       };
+
+      setIsSpeaking(true);
+      utteranceRef.current = utter;
       window.speechSynthesis.speak(utter);
     });
   };
@@ -186,6 +198,63 @@ export default function ChatbotUI() {
     });
   };
 
+  const toggleMute = () => {
+    setIsMuted((prev) => {
+      const next = !prev;
+      isMutedRef.current = next;
+
+      if (next) {
+        window.speechSynthesis.cancel();
+        setIsSpeaking(false);
+      } else {
+        resumeSpeechQueue(); // resume saat unmute
+      }
+
+      return next;
+    });
+  };
+
+  const resumeSpeechQueue = () => {
+    const queue = speechQueueRef.current;
+    if (!queue) return;
+
+    const { words, index } = queue;
+    currentWordsRef.current = words;
+    currentWordIndexRef.current = index;
+
+    const speakNextWord = () => {
+      if (currentWordIndexRef.current >= words.length) {
+        setIsSpeaking(false);
+        speechQueueRef.current = null;
+        return;
+      }
+
+      const word = words[currentWordIndexRef.current];
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = "id-ID";
+
+      utter.onend = () => {
+        currentWordIndexRef.current += 1;
+
+        if (!isMutedRef.current) {
+          speakNextWord();
+        } else {
+          speechQueueRef.current = {
+            words,
+            index: currentWordIndexRef.current,
+          };
+          setIsSpeaking(false);
+        }
+      };
+
+      setIsSpeaking(true);
+      utteranceRef.current = utter;
+      window.speechSynthesis.speak(utter);
+    };
+
+    speakNextWord();
+  };
+
   return (
     <>
       <button
@@ -224,9 +293,10 @@ export default function ChatbotUI() {
             <div className="chat-header relative flex items-center justify-between p-4 border-b border-zinc-200 dark:border-zinc-700 bg-gradient-to-r from-violet-500 to-indigo-500 text-white select-none cursor-move">
               <h2 className="font-semibold text-lg">AI Assistant</h2>
               <div className="flex items-center gap-2">
-                <motion.button onClick={() => setIsMuted((prev) => !prev)} whileTap={{ scale: 0.9 }} className="p-2 rounded-full border border-white/20 hover:bg-white/10 transition">
+                <motion.button onClick={toggleMute} whileTap={{ scale: 0.9 }} className="p-2 rounded-full border border-white/20 hover:bg-white/10 transition">
                   {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
                 </motion.button>
+
                 <button
                   onClick={toggleChat}
                   className=" w-8 h-8 flex items-center justify-center rounded-full border border-white/20 bg-transparent text-white shadow-sm hover:bg-red-500 hover:text-white hover:scale-110 hover:rotate-12 focus:scale-110 active:scale-95 transition-all duration-300 ease-in-out  dark:hover:bg-red-600 outline-none"
@@ -274,9 +344,9 @@ export default function ChatbotUI() {
                 onClick={handleSend}
                 whileTap={{ scale: 0.9 }}
                 disabled={isLoading || isSpeaking || isTyping}
-                className="p-2 rounded-full bg-violet-500 text-white hover:bg-violet-600 transition focus:outline-none focus:ring-2 focus:ring-violet-500 disabled:opacity-50"
+                className="p-2 rounded-full bg-violet-500 text-white hover:bg-violet-600 transition focus:outline-none focus:ring-2 focus:ring-violet-500 disabled:opacity-50 group flex align-middle self-center items-center justify-center"
               >
-                <Send className="w-4 h-4" />
+                <Send className="w-4 h-4 group-focus:rotate-45 transform origin-center transition-transform duration-300 ease-in-out" />
               </motion.button>
               <motion.button
                 onClick={toggleMic}
