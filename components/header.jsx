@@ -7,6 +7,7 @@ import { ModeToggle } from "./mode-toggle";
 import { useEffect, useState } from "react";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { useTranslations } from "next-intl";
+import { motion, AnimatePresence } from "framer-motion";
 
 export const HeroHeader = () => {
   const [menuState, setMenuState] = React.useState(false);
@@ -88,26 +89,39 @@ export const HeroHeader = () => {
               </ul>
             </div>
 
-            <div className="bg-background in-data-[state=active]:block lg:in-data-[state=active]:flex mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 rounded-3xl border p-6 shadow-2xl shadow-zinc-300/20 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent">
-              <div className="lg:hidden">
-                <ul className="space-y-6 text-base">
-                  {menuItems.map((item, index) => (
-                    <li key={index}>
-                      <a
-                        href={item.href}
-                        onClick={() => setMenuState(false)} // agar menu tertutup setelah klik
-                        className="block text-muted-foreground hover:text-accent-foreground duration-150"
-                      >
-                        {item.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="flex w-full justify-center item-center space-x-3 lg:space-x-0 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
-                <ModeToggle />
-                <LocaleSwitcher />
-              </div>
+            <AnimatePresence>
+              {menuState && (
+                <motion.div
+                  key="mobile-menu"
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="bg-background mb-6 w-full flex-wrap items-center justify-end space-y-8 rounded-3xl border p-6 shadow-2xl shadow-zinc-300/20 md:flex-nowrap lg:m-0 lg:hidden"
+                >
+                  <div className="lg:hidden">
+                    <ul className="space-y-6 text-base">
+                      {menuItems.map((item, index) => (
+                        <li key={index}>
+                          <a href={item.href} onClick={() => setMenuState(false)} className="block text-muted-foreground hover:text-accent-foreground duration-150">
+                            {item.name}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-6 flex justify-center space-x-3">
+                      <ModeToggle />
+                      <LocaleSwitcher />
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Tampilkan toggle di desktop */}
+            <div className="hidden lg:flex items-center space-x-3">
+              <ModeToggle />
+              <LocaleSwitcher />
             </div>
           </div>
         </div>
