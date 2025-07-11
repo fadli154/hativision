@@ -108,7 +108,7 @@ export default function HeroSection() {
   return (
     <AOSWrapper>
       {isDragging && (
-        <div className="fixed  inset-0 !z-[9999] bg-violet-400/30 border-2 border-dashed border-violet-500 flex justify-center items-center text-2xl font-semibold text-violet-700 pointer-events-none transition-all duration-300 ease-in-out animate-fade-in">
+        <div className="fixed inset-0 !z-[9999] bg-violet-400/30 border-2 border-dashed border-violet-500 flex justify-center items-center text-2xl font-semibold text-violet-700 pointer-events-none transition-all duration-300 ease-in-out animate-fade-in">
           Lepaskan gambar untuk mengunggah...
         </div>
       )}
@@ -117,7 +117,7 @@ export default function HeroSection() {
 
         <main className="overflow-hidden min-h-dvh !z-3" onDrop={handleDrop} onDragOver={handleDragOver} onDragEnter={handleDragEnter} onDragLeave={handleDragLeave}>
           <section>
-            <div className="pt-18 lg:pt-30 2xl:pt-44">
+            <div className="pt-14 lg:pt-30 2xl:pt-44">
               <div className="relative mx-auto flex max-w-6xl flex-col px-6 lg:block">
                 <div className="mx-auto max-w-lg text-center lg:ml-0 lg:w-1/2 lg:text-left relative">
                   <div className="w-full flex justify-center items-center lg:justify-start lg:items-start">

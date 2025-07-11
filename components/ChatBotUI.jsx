@@ -1,10 +1,9 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Bot, BotOff, Mic, Send, X } from "lucide-react";
+import { Bot, BotOff, Mic, Send, X, Volume2, VolumeX } from "lucide-react";
 import { useChatbot } from "@/context/chatbotcontext";
-import { useEffect } from "react";
 
 export default function ChatbotUI() {
   const { isOpen, setIsOpen } = useChatbot();
@@ -12,81 +11,114 @@ export default function ChatbotUI() {
   const [messages, setMessages] = useState([{ from: "bot", text: "Hai! Ada yang bisa aku bantu?" }]);
   const [isListening, setIsListening] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const chatRef = useRef(null);
-  const recognitionRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  const chatRef = useRef(null);
+  const recognitionRef = useRef(null);
+  const modalRef = useRef(null);
+  const offsetRef = useRef({ x: 0, y: 0 });
+  const isMutedRef = useRef(false);
+  const [dragging, setDragging] = useState(false);
+  const [position, setPosition] = useState({ x: 20, y: 400 });
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const padding = 24;
+      const buttonSize = 56;
+      const modalHeight = 400;
+      const modalWidth = 400;
+      const y = window.innerHeight - buttonSize - modalHeight - padding;
+      const x = window.innerWidth - modalWidth - padding;
+      setPosition({ x, y });
+      setIsClient(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    isMutedRef.current = isMuted;
+  }, [isMuted]);
 
   useEffect(() => {
     const saved = localStorage.getItem("chatbot-messages");
-    if (saved) {
-      setMessages(JSON.parse(saved));
-    }
+    if (saved) setMessages(JSON.parse(saved));
   }, []);
 
   useEffect(() => {
     localStorage.setItem("chatbot-messages", JSON.stringify(messages));
   }, [messages]);
 
-  const setupRecognition = () => {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      alert("Browser kamu tidak mendukung Speech Recognition. Coba di Chrome/Edge.");
-      return null;
-    }
-
-    const recognition = new SpeechRecognition();
-    recognition.lang = "id-ID";
-    recognition.continuous = false;
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-
-    return recognition;
+  const handleMouseDown = (e) => {
+    const tag = e.target.tagName;
+    if (["INPUT", "TEXTAREA", "BUTTON"].includes(tag)) return;
+    e.preventDefault();
+    setDragging(true);
+    const rect = modalRef.current.getBoundingClientRect();
+    offsetRef.current = {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    };
   };
 
+  const handleMouseMove = (e) => {
+    if (dragging) {
+      const newX = Math.max(0, Math.min(e.clientX - offsetRef.current.x, window.innerWidth - 400));
+      const newY = Math.max(0, Math.min(e.clientY - offsetRef.current.y, window.innerHeight - 360));
+      setPosition({ x: newX, y: newY });
+    }
+  };
+
+  const handleMouseUp = () => setDragging(false);
+
+  useEffect(() => {
+    if (dragging) {
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
+    } else {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    }
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [dragging]);
+
   const toggleMic = () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) return alert("Browser tidak mendukung Speech Recognition");
+
     if (isListening) {
       setIsListening(false);
       recognitionRef.current?.stop();
     } else {
-      const recognition = setupRecognition();
-      if (!recognition) return;
-
+      const recognition = new SpeechRecognition();
+      recognition.lang = "id-ID";
       recognitionRef.current = recognition;
-      setIsListening(true);
-
       recognition.start();
+      setIsListening(true);
 
       recognition.onresult = async (event) => {
         const transcript = event.results[0][0].transcript;
-        const userMessage = { from: "user", text: transcript };
-        setMessages((prev) => [...prev, userMessage]);
-
-        const reply = await generateReply(input); // atau transcript
+        setMessages((prev) => [...prev, { from: "user", text: transcript }]);
+        const reply = await generateReply(transcript);
         setMessages((prev) => [...prev, { from: "bot", text: "" }]);
         await typeText(reply);
-        await speak(reply); // menunggu speak selesai
+        await speak(reply);
       };
 
-      recognition.onerror = (event) => {
-        console.error("Speech recognition error", event.error);
-        setIsListening(false);
-      };
-
-      recognition.onend = () => {
-        setIsListening(false);
-      };
+      recognition.onerror = () => setIsListening(false);
+      recognition.onend = () => setIsListening(false);
     }
   };
 
-  // Native speech synthesis
   const speak = (text) => {
+    if (isMutedRef.current) return Promise.resolve();
     return new Promise((resolve) => {
       const utter = new SpeechSynthesisUtterance(text);
       utter.lang = "id-ID";
-      utter.pitch = 1;
-      utter.rate = 1;
-
       setIsSpeaking(true);
       utter.onend = () => {
         setIsSpeaking(false);
@@ -100,14 +132,12 @@ export default function ChatbotUI() {
 
   const handleSend = async () => {
     if (!input.trim()) return;
-
     const userMessage = { from: "user", text: input };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
-
     const reply = await generateReply(input);
-    const botMessage = { from: "bot", text: reply };
-    setMessages((prev) => [...prev, botMessage]);
+    setMessages((prev) => [...prev, { from: "bot", text: "" }]);
+    await typeText(reply);
     speak(reply);
   };
 
@@ -119,17 +149,10 @@ export default function ChatbotUI() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userText }),
       });
-
       const data = await res.json();
-
-      if (data.error?.code === 429 || data.error?.message?.includes("limit")) {
-        return "Maaf, batas penggunaan AI sudah habis. Coba lagi nanti.";
-      }
-
-      return data.reply;
-    } catch (err) {
-      console.error("Gemini error:", err);
-      return "Maaf, terjadi kesalahan.";
+      return data.reply || "Maaf, terjadi kesalahan.";
+    } catch {
+      return "Maaf, tidak bisa terhubung.";
     } finally {
       setIsLoading(false);
     }
@@ -159,27 +182,40 @@ export default function ChatbotUI() {
 
   return (
     <>
-      {/* Floating Button */}
       <button
         onClick={toggleChat}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 flex items-center justify-center rounded-full bg-gradient-to-br from-violet-600 to-indigo-500 shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 text-white"
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 flex items-center justify-center rounded-full bg-gradient-to-br from-violet-600 to-indigo-500 text-white shadow-xl hover:scale-105 active:scale-95 transition-all duration-300"
       >
         {isOpen ? <BotOff className="w-6 h-6 animate-pulse" /> : <Bot className="w-6 h-6" />}
       </button>
 
-      {/* Chat Modal */}
       <AnimatePresence>
-        {isOpen && (
+        {isOpen && isClient && (
           <motion.div
             key="chatbot"
+            ref={modalRef}
             initial={{ opacity: 0, y: 60, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 40, scale: 0.95 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="fixed bottom-24 right-4 lg:right-10 z-50 w-[92vw] max-w-md h-[calc(100vh-14rem)] max-h-[75vh] min-h-[300px] sm:min-h-[350px] bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+            onMouseDown={(e) => {
+              if (e.target.closest(".chat-header")) handleMouseDown(e);
+            }}
+            style={{
+              position: "fixed",
+              top: position.y,
+              left: position.x,
+              zIndex: 1000,
+              width: "92vw",
+              maxWidth: "400px",
+              maxHeight: "65vh",
+              display: "flex",
+              flexDirection: "column",
+            }}
+            className="rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 shadow-2xl overflow-hidden"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-zinc-200 dark:border-zinc-700 bg-gradient-to-r from-violet-500 to-indigo-500 text-white">
+            <div className="chat-header flex items-center justify-between p-4 border-b border-zinc-200 dark:border-zinc-700 bg-gradient-to-r from-violet-500 to-indigo-500 text-white select-none cursor-move">
               <h2 className="font-semibold text-lg">AI Assistant</h2>
               <button onClick={toggleChat} className="hover:scale-110 transition-transform focus:outline-none rounded-full">
                 <motion.div whileTap={{ rotate: 90 }}>
@@ -188,7 +224,7 @@ export default function ChatbotUI() {
               </button>
             </div>
 
-            {/* Chat Messages */}
+            {/* Chat */}
             <div ref={chatRef} className="flex-1 overflow-y-auto space-y-3 px-4 py-2 scrollbar-thin scrollbar-thumb-zinc-300 dark:scrollbar-thumb-zinc-700">
               {messages.map((msg, idx) => (
                 <div key={idx} className={`flex ${msg.from === "user" ? "justify-end" : "justify-start"}`}>
@@ -202,7 +238,7 @@ export default function ChatbotUI() {
                 </div>
               ))}
               {isLoading && (
-                <div className="self-start text-sm text-zinc-500 flex items-center gap-2 animate-pulse mt-2">
+                <div className="text-sm text-zinc-500 flex items-center gap-2 animate-pulse mt-2">
                   <div className="w-3 h-3 rounded-full bg-zinc-400 animate-bounce" />
                   <div className="w-3 h-3 rounded-full bg-zinc-400 animate-bounce delay-100" />
                   <div className="w-3 h-3 rounded-full bg-zinc-400 animate-bounce delay-200" />
@@ -211,7 +247,7 @@ export default function ChatbotUI() {
               )}
             </div>
 
-            {/* Input Area */}
+            {/* Input */}
             <div className="flex items-center gap-2 p-4 border-t border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900">
               <input
                 type="text"
@@ -221,16 +257,14 @@ export default function ChatbotUI() {
                 onKeyDown={(e) => e.key === "Enter" && handleSend()}
                 className="flex-1 p-2 px-4 text-sm rounded-full border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-violet-500"
               />
-
               <motion.button
                 onClick={handleSend}
-                whileTap={{ scale: 0.9, rotate: -10 }}
+                whileTap={{ scale: 0.9 }}
                 disabled={isLoading || isSpeaking || isTyping}
                 className="p-2 rounded-full bg-violet-500 text-white hover:bg-violet-600 transition focus:outline-none focus:ring-2 focus:ring-violet-500 disabled:opacity-50"
               >
                 <Send className="w-4 h-4" />
               </motion.button>
-
               <motion.button
                 onClick={toggleMic}
                 animate={{ scale: isListening ? 1.2 : 1 }}
@@ -241,6 +275,13 @@ export default function ChatbotUI() {
                 } hover:text-violet-500 transition focus:outline-none focus:ring-2 focus:ring-violet-500 disabled:opacity-50`}
               >
                 <Mic className="w-4 h-4" />
+              </motion.button>
+              <motion.button
+                onClick={() => setIsMuted((prev) => !prev)}
+                whileTap={{ scale: 0.9 }}
+                className="p-2 rounded-full border text-zinc-500 border-zinc-300 dark:border-zinc-600 hover:text-violet-500 transition focus:outline-none focus:ring-2 focus:ring-violet-500"
+              >
+                {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
               </motion.button>
             </div>
           </motion.div>
