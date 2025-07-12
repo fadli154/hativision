@@ -36,8 +36,10 @@ export default function ChatbotUI() {
           const rect = modalRef.current.getBoundingClientRect();
           const buttonSize = 56;
           const gap = 16;
-          const x = window.innerWidth - rect.width - 24;
+
+          const x = (window.innerWidth - rect.width) / 2;
           const y = window.innerHeight - rect.height - buttonSize - gap - 24;
+
           setPosition({ x: Math.max(10, x), y: Math.max(10, y) });
         }
       });
@@ -259,7 +261,7 @@ export default function ChatbotUI() {
     <>
       <button
         onClick={toggleChat}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 flex items-center justify-center rounded-full bg-gradient-to-br from-violet-600 to-indigo-500 text-white shadow-xl hover:scale-105 active:scale-95 transition-all duration-300"
+        className="fixed bottom-6 right-3 sm:right-6 z-50 w-14 h-14 flex items-center justify-center rounded-full bg-gradient-to-br from-violet-600 to-indigo-500 text-white shadow-xl hover:scale-105 active:scale-95 transition-all duration-300"
       >
         {isOpen ? <BotOff className="w-6 h-6 animate-pulse" /> : <Bot className="w-6 h-6" />}
       </button>
@@ -278,7 +280,7 @@ export default function ChatbotUI() {
             }}
             style={{
               position: "fixed",
-              right: "24px",
+              right: "18px",
               bottom: `${56 + 16 + 24}px`,
               zIndex: 1000,
               width: "92vw",
