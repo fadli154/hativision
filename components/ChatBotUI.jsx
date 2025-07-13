@@ -27,22 +27,11 @@ export default function ChatbotUI() {
   const isMutedRef = useRef(false);
   const [dragging, setDragging] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [hasMoved, setHasMoved] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       setIsClient(true);
-      requestAnimationFrame(() => {
-        if (modalRef.current) {
-          const rect = modalRef.current.getBoundingClientRect();
-          const buttonSize = 56;
-          const gap = 16;
-
-          const x = (window.innerWidth - rect.width) / 2;
-          const y = window.innerHeight - rect.height - buttonSize - gap - 24;
-
-          setPosition({ x: Math.max(10, x), y: Math.max(10, y) });
-        }
-      });
     }
   }, []);
 
@@ -73,12 +62,10 @@ export default function ChatbotUI() {
 
   const handleMouseMove = (e) => {
     if (!dragging || !modalRef.current) return;
-
+    setHasMoved(true);
     const modalRect = modalRef.current.getBoundingClientRect();
-
     const newX = Math.max(0, Math.min(e.clientX - offsetRef.current.x, window.innerWidth - modalRect.width));
     const newY = Math.max(0, Math.min(e.clientY - offsetRef.current.y, window.innerHeight - modalRect.height));
-
     setPosition({ x: newX, y: newY });
   };
 
@@ -135,13 +122,11 @@ export default function ChatbotUI() {
     return new Promise((resolve) => {
       const utter = new SpeechSynthesisUtterance(text);
       utter.lang = "id-ID";
-
       utter.onend = () => {
         setIsSpeaking(false);
         speechQueueRef.current = null;
         resolve();
       };
-
       setIsSpeaking(true);
       utteranceRef.current = utter;
       window.speechSynthesis.speak(utter);
@@ -204,14 +189,12 @@ export default function ChatbotUI() {
     setIsMuted((prev) => {
       const next = !prev;
       isMutedRef.current = next;
-
       if (next) {
         window.speechSynthesis.cancel();
         setIsSpeaking(false);
       } else {
-        resumeSpeechQueue(); // resume saat unmute
+        resumeSpeechQueue();
       }
-
       return next;
     });
   };
@@ -219,7 +202,6 @@ export default function ChatbotUI() {
   const resumeSpeechQueue = () => {
     const queue = speechQueueRef.current;
     if (!queue) return;
-
     const { words, index } = queue;
     currentWordsRef.current = words;
     currentWordIndexRef.current = index;
@@ -234,10 +216,8 @@ export default function ChatbotUI() {
       const word = words[currentWordIndexRef.current];
       const utter = new SpeechSynthesisUtterance(word);
       utter.lang = "id-ID";
-
       utter.onend = () => {
         currentWordIndexRef.current += 1;
-
         if (!isMutedRef.current) {
           speakNextWord();
         } else {
@@ -248,7 +228,6 @@ export default function ChatbotUI() {
           setIsSpeaking(false);
         }
       };
-
       setIsSpeaking(true);
       utteranceRef.current = utter;
       window.speechSynthesis.speak(utter);
@@ -271,17 +250,13 @@ export default function ChatbotUI() {
           <motion.div
             key="chatbot"
             ref={modalRef}
-            initial={{ opacity: 0, y: 60, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 40, scale: 0.95 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
-            onMouseDown={(e) => {
-              if (e.target.closest(".chat-header")) handleMouseDown(e);
-            }}
             style={{
               position: "fixed",
-              right: "18px",
-              bottom: `${56 + 16 + 24}px`,
+              ...(hasMoved ? { left: `${position.x}px`, top: `${position.y}px` } : { right: "18px", bottom: `${56 + 16 + 24}px` }),
               zIndex: 1000,
               width: "92vw",
               maxWidth: "400px",
@@ -291,14 +266,15 @@ export default function ChatbotUI() {
             }}
             className="rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 shadow-2xl overflow-hidden"
           >
-            {/* Header */}
-            <div className="chat-header relative flex items-center justify-between p-4 border-b border-zinc-200 dark:border-zinc-700 bg-gradient-to-r from-violet-500 to-indigo-500 text-white select-none cursor-move">
+            <div
+              className="chat-header relative flex items-center justify-between p-4 border-b border-zinc-200 dark:border-zinc-700 bg-gradient-to-r from-violet-500 to-indigo-500 text-white select-none cursor-move"
+              onMouseDown={handleMouseDown}
+            >
               <h2 className="font-semibold text-lg">AI Assistant</h2>
               <div className="flex items-center gap-2">
                 <motion.button onClick={toggleMute} whileTap={{ scale: 0.9 }} className="p-2 rounded-full border border-white/20 hover:bg-white/10 transition">
                   {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
                 </motion.button>
-
                 <button
                   onClick={toggleChat}
                   className=" w-8 h-8 flex items-center justify-center rounded-full border border-white/20 bg-transparent text-white shadow-sm hover:bg-red-500 hover:text-white hover:scale-110 hover:rotate-12 focus:scale-110 active:scale-95 transition-all duration-300 ease-in-out  dark:hover:bg-red-600 outline-none"
@@ -309,7 +285,6 @@ export default function ChatbotUI() {
               </div>
             </div>
 
-            {/* Chat */}
             <div ref={chatRef} className="flex-1 overflow-y-auto space-y-3 px-4 py-2 scrollbar-thin scrollbar-thumb-zinc-300 dark:scrollbar-thumb-zinc-700">
               {messages.map((msg, idx) => (
                 <div key={idx} className={`flex ${msg.from === "user" ? "justify-end" : "justify-start"}`}>
@@ -332,7 +307,6 @@ export default function ChatbotUI() {
               )}
             </div>
 
-            {/* Input */}
             <div className="flex items-center gap-2 p-4 border-t border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900">
               <input
                 type="text"
